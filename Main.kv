@@ -1,0 +1,161 @@
+#:kivy 2.1.0
+<Home>:
+    cols : 1
+    spacing : 10,10
+    padding : 10,10
+    GridLayout:
+        spacing : 10,10
+        padding : 10,10
+        rows : 8
+        Label:
+            id:welcome
+            text : "Welcome"
+            font_size : 40
+            color : 1,1,1,1
+        Label:
+            id:exercice
+            text : "Quizzes By Exercise"
+            font_size : 40
+            color : 1,1,1,1
+        GridLayout:
+            spacing : 10,10
+            padding : 10,10
+            cols:5
+            Label:
+                id:mc
+                text : "MC"
+                font_size : 20
+                color : 1,1,1,1
+            Label:
+                id:fr
+                text : "FR"
+                font_size : 20
+                color : 1,1,1,1
+            Label:
+                id:cw
+                text : "CW"
+                font_size : 20
+                color : 1,1,1,1
+            Label:
+                id:ow
+                text : "OW"
+                font_size : 20
+                color : 1,1,1,1
+            Label:
+                id:rw
+                text : "RW"
+                font_size : 20
+                color : 1,1,1,1
+        Label:
+            id:content
+            text : "Quizzes By Content"
+            font_size : 40
+            color : 1,1,1,1
+        GridLayout:
+            spacing : 10,10
+            padding : 10,10
+            cols:3
+            Label:
+                id:grammar
+                text : "Grammar"
+                font_size : 20
+                color : 1,1,1,1
+            Label:
+                id:vocabulary
+                text : "Vocabulary"
+                font_size : 20
+                color : 1,1,1,1
+            Label:
+                id:syntax
+                text : "Syntax"
+                font_size : 20
+                color : 1,1,1,1
+        Label:
+            id:content
+            text : "Random Quiz"
+            font_size : 40
+            color : 1,1,1,1
+        GridLayout:
+            spacing : 10,10
+            padding : 10,10
+            cols:1
+            Button:
+                id:begin
+                text : "Begin"
+                font_size : 40
+                border: 2,2,2,2
+                background_color: 0.459, 0.722, 0.31, 1  
+                background_normal: ''
+                #background_down: ''
+                on_press : root.exercice()
+        Button:
+            text:"Teacher Mode"
+            font_size : 40
+            border: 2,2,2,2
+            background_color: 0.459, 0.722, 0.31, 1  
+            background_normal: ''
+            ##background_down: ''  
+            on_press : root.login()
+<TeacherLogin>:
+    spacing : 10,10
+    padding : 10,10
+    rows:4
+    Label:
+        id:please
+        text: "Please Enter the\nTeacher Passcode"
+        font_size : 40
+        color : 1,1,1,1
+    Label:
+        id:credential
+        text: "Sorry, wrong credential"
+        font_size : 40
+        color : 1,1,1,1
+    TextInput:
+        id:input
+        text: "***"
+        font_size : 20
+        color : 1,1,1,1
+        foreground_color : 1,1,1,1
+        background_color : 0.482, 0.82, 0.38, 1
+    Button:
+        text:"Home"
+        font_size : 40
+        border: 2,2,2,2
+        background_color: 0.459, 0.722, 0.31, 1  
+        background_normal: ''
+        #background_down: ''  
+        on_press : root.home()
+
+<Results>:
+    rows : 4
+    spacing : 10,10
+    padding : 10,10
+    Label:
+        text: 'Press Below to Reveal Score'
+        font_size: 20
+        color: 1,1,1,1
+    CheckBox:
+        group : 'v'
+        on_active : root.change_stats()
+    Label:
+        text: ''
+        font_size: 20
+        color: 1,1,1,1
+
+<Exercice>:
+    rows : 4
+    spacing : 10,10
+    padding : 10,10
+    Label:
+        text: 'Press Below to Start'
+        font_size: 20
+        color: 1,1,1,1
+    CheckBox:
+        group : 'v'
+        on_active : root.build()
+    Label:
+        text: ''
+        font_size: 20
+        color: 1,1,1,1
+
+
