@@ -196,4 +196,112 @@
         font_size: 20
         color: 1,1,1,1
 
-
+<AddDrill>:
+    rows : 9
+    spacing : 10,10
+    padding : 10,10
+    GridLayout:
+        cols:2
+        Label:
+            text: 'Tags'
+            font_size: 20
+            color: 1,1,1,1
+        GridLayout:
+            rows:3
+            cols:2
+            Label:
+                text: 'Grammar'
+                font_size: 20
+                color: 1,1,1,1
+            CheckBox:
+                id: grammar
+                on_press : root.addremove_tag("grammar", self.active)
+            Label:
+                text: 'Vocabulary'
+                font_size: 20
+                color: 1,1,1,1
+            CheckBox:
+                id: grammar
+                on_press : root.addremove_tag("vocabulary", self.active)
+            Label:
+                text: 'Syntax'
+                font_size: 20
+                color: 1,1,1,1
+            CheckBox:
+                id: grammar
+                on_press : root.addremove_tag("syntax", self.active)
+    GridLayout:
+        cols:2
+        Label:
+            text: 'Question Type'
+            font_size: 20
+            color: 1,1,1,1
+        GridLayout:
+            rows:5
+            cols:2
+            Label:
+                text: 'Multiple Choice'
+                font_size: 20
+                color: 1,1,1,1
+            CheckBox:
+                group: "v"
+                id: multiple_choice
+                on_press : root.change_type("multiple_choice")
+            Label:
+                text: 'True or False'
+                font_size: 20
+                color: 1,1,1,1
+            CheckBox:
+                group: "v"
+                id: true_false
+                on_press : root.change_type("true_false")
+            Label:
+                text: 'Free Response'
+                font_size: 20
+                color: 1,1,1,1
+            CheckBox:
+                group: "v"
+                id: free
+                on_press : root.change_type("free")
+            Label:
+                text: 'Conncecting'
+                font_size: 20
+                color: 1,1,1,1
+            CheckBox:
+                group: "v"
+                id: connecting
+                on_press : root.change_type("connecting")
+            Label:
+                text: 'Ordering'
+                font_size: 20
+                color: 1,1,1,1
+            CheckBox:
+                group: "v"
+                id: ordering
+                on_press : root.change_type("ordering")
+    TextInput:
+        id: question_text
+        hint_text : "Enter question here"
+        hint_text_color: 1,1,1,1
+        font_size : 20
+        color : 1,1,1,1
+        foreground_color : 1,1,1,1
+        background_color : 0.482, 0.82, 0.38, 1
+        multiline : False
+    TextInput:
+        id: explanation_text
+        hint_text : "Enter explanation here"
+        hint_text_color: 1,1,1,1
+        font_size : 20
+        color : 1,1,1,1
+        foreground_color : 1,1,1,1
+        background_color : 0.482, 0.82, 0.38, 1
+        multiline : False
+    Button:
+        text: "Add to \nQuestion Database"
+        font_size : 40
+        border: 2,2,2,2
+        background_color: 0.459, 0.722, 0.31, 1  
+        background_normal: ''
+        #background_down: ''  
+        on_press : root.add_to_db()

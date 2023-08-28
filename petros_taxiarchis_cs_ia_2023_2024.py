@@ -12,6 +12,7 @@ from kivy.uix.button import Button
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.progressbar import ProgressBar
 from kivy.uix.textinput import TextInput
+from data_base_testing import we_addin
 import math
 Window.size = (720*0.65, 1280*0.65)
 import random
@@ -21,6 +22,23 @@ global score
 global passcode 
 passcode = "passcode"
 score = 0
+
+#variables for database and editing
+global tags
+tags = []
+global mytype
+mytype = ""
+global questiondb
+questiondb = ""
+global optiondb
+optiondb = 1
+global all_optionsdb
+all_optionsdb = []
+global correctdb
+correctdb = []
+global exp_db
+exp_db = ""
+#
 class Home(GridLayout):
     def login(self):
         print(self)
@@ -73,7 +91,30 @@ class TeacherDashboard(GridLayout):
         latinapp.screen_manager.current = "DrillList"
     def home(self):
         latinapp.screen_manager.current = "Home"
-        
+
+class AddDrill(GridLayout):
+    def add_to_db(self):
+        global tags
+        global mytype
+        global questiondb
+        global optiondb
+        global all_optionsdb
+        global correctdb
+        global exp_db
+        questiondb = self.ids.question_text.text
+        exp_db = self.ids.explanation_text.text
+        we_addin(tags,mytype,questiondb, optiondb, all_optionsdb, correctdb, exp_db)
+        pass
+    def addremove_tag(self, value, active):
+        global tags
+        if active:
+            tags.append(value)
+        else:
+            tags.remove(value)
+    def change_type(self, value):
+        global mytype
+        mytype = value
+
 class TeacherLogin(GridLayout):
     def home(self):
         latinapp.screen_manager.current = "Home"
@@ -277,6 +318,11 @@ class MainApp(App):
 
         self.connect_page = TeacherDashboard()
         screen = Screen(name="TeacherDashboard")
+        screen.add_widget(self.connect_page)
+        self.screen_manager.add_widget(screen)
+
+        self.connect_page = AddDrill()
+        screen = Screen(name="AddDrill")
         screen.add_widget(self.connect_page)
         self.screen_manager.add_widget(screen)
 
