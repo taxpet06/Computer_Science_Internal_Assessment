@@ -100,12 +100,10 @@ class Exercice(GridLayout):
         global current_object
         global exp_text
         global Explanation
-        global current_object
         global current_answer
         global Options
         global Next
         global Submit
-        global current_object
         global current_index
         current_object = task_list[current_index]
         current_answer = ""
