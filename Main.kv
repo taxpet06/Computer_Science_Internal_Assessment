@@ -102,21 +102,59 @@
     rows:4
     Label:
         id:please
-        text: "Please Enter the\nTeacher Passcode"
+        text: "Please Enter the\nTeacher Passcode\nand Hit Enter"
         font_size : 40
         color : 1,1,1,1
     Label:
         id:credential
-        text: "Sorry, wrong credential"
+        text: ""
         font_size : 40
         color : 1,1,1,1
     TextInput:
         id:input
-        text: "***"
+        text: ""
+        hint_text : "Enter passcode here"
+        hint_text_color: 1,1,1,1
         font_size : 20
         color : 1,1,1,1
         foreground_color : 1,1,1,1
         background_color : 0.482, 0.82, 0.38, 1
+        multiline : False
+        on_text_validate : root.dashboard()
+    Button:
+        text:"Home"
+        font_size : 40
+        border: 2,2,2,2
+        background_color: 0.459, 0.722, 0.31, 1  
+        background_normal: ''
+        #background_down: ''  
+        on_press : root.home()
+
+<TeacherDashboard>:
+    spacing : 10,10
+    padding : 10,10
+    rows:4
+    Label:
+        id:dashboard
+        text: "Welcome to the\nTeacher Dashboard"
+        font_size : 40
+        color : 1,1,1,1
+    Button:
+        text:"Add Drill"
+        font_size : 40
+        border: 2,2,2,2
+        background_color: 0.459, 0.722, 0.31, 1  
+        background_normal: ''
+        #background_down: ''  
+        on_press : root.add()
+    Button:
+        text:"Drill List"
+        font_size : 40
+        border: 2,2,2,2
+        background_color: 0.459, 0.722, 0.31, 1  
+        background_normal: ''
+        #background_down: ''  
+        on_press : root.drills()
     Button:
         text:"Home"
         font_size : 40

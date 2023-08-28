@@ -11,12 +11,15 @@ from kivy.uix.checkbox import CheckBox
 from kivy.uix.button import Button
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.progressbar import ProgressBar
+from kivy.uix.textinput import TextInput
 import math
 Window.size = (720*0.65, 1280*0.65)
 import random
 kivy.require('1.11.1')
 Window.clearcolor = (0.1, 0.1, 0.2, 1)
 global score
+global passcode 
+passcode = "passcode"
 score = 0
 class Home(GridLayout):
     def login(self):
@@ -63,10 +66,23 @@ class Results(GridLayout):
         self.add_widget(home)
         home.on_press = self.home
         
-
+class TeacherDashboard(GridLayout):
+    def add(self):
+        latinapp.screen_manager.current = "AddDrill"
+    def drills(self):
+        latinapp.screen_manager.current = "DrillList"
+    def home(self):
+        latinapp.screen_manager.current = "Home"
+        
 class TeacherLogin(GridLayout):
     def home(self):
         latinapp.screen_manager.current = "Home"
+    def dashboard(self):
+        global passcode
+        if self.ids.input.text == passcode:
+            latinapp.screen_manager.current = "TeacherDashboard"
+        else:
+            self.ids.credential.text = "Sorry, wrong credential"
 
 class Exercice(GridLayout):
     exp_text = ""
@@ -130,6 +146,8 @@ class Exercice(GridLayout):
             if current_answer != "":
                 Next.disabled = False
                 Submit.disabled = False
+        
+        #True_False
         elif current_object["exercice_type"] == "true_false":
             self.add_widget(Label(text = current_object["question_text"], color = (1,1,1,1), font_size = 20))
             Options = GridLayout(rows = current_object["options"], cols = 1, spacing=(10,10),padding=(10,10))
@@ -147,6 +165,28 @@ class Exercice(GridLayout):
             if current_answer != "":
                 Next.disabled = False
                 Submit.disabled = False
+        
+        #Free Response
+        elif current_object["exercice_type"] == "free":
+            self.add_widget(Label(text = current_object["question_text"], color = (1,1,1,1), font_size = 20))
+            Options = GridLayout(rows = current_object["options"], cols = 1, spacing=(10,10),padding=(10,10))
+            self.add_widget(Options)
+            answer_field = TextInput(text = "", hint_text = "Place response here...", hint_text_color = (1,1,1,1), multiline = False, font_size = 20, color = (1,1,1,1), foreground_color = (1,1,1,1), background_color = (0.482, 0.82, 0.38, 1))
+            answer_field.bind(on_text_validate=self.get_answer)
+            Options.add_widget(answer_field)
+            Explanation = Label(text = "", color = (1,1,1,1), font_size = 20)
+            exp_text = current_object["explanation"]
+            self.add_widget(Explanation)
+            Buttons = GridLayout(cols = 2, spacing=(10,10),padding=(10,10))
+            self.add_widget(Buttons)
+            Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), background_color=(0.459, 0.722, 0.31, 1), background_normal ='', on_press = self.reveal_answer, disabled = True)
+            Next = Button(text="Next",font_size = 20, border= (2,2,2,2), background_color=(0.459, 0.722, 0.31, 1), background_normal ='', disabled = True, on_press = self.next_task)
+            Buttons.add_widget(Submit)
+            Buttons.add_widget(Next)
+            if current_answer != "":
+                Next.disabled = False
+                Submit.disabled = False
+
     def reveal_answer(self, instance): 
         global Explanation
         global exp_text
@@ -192,6 +232,9 @@ class Exercice(GridLayout):
                 Submit.disabled = False
             else:
                 Next.disabled = True
+        elif current_object["exercice_type"] == "free":
+            Submit.disabled = False
+            current_answer = instance.text
     def next_task(self, instance):
         global mycol
         global task_amount
@@ -229,6 +272,11 @@ class MainApp(App):
 
         self.connect_page = Exercice()
         screen = Screen(name="Exercice")
+        screen.add_widget(self.connect_page)
+        self.screen_manager.add_widget(screen)
+
+        self.connect_page = TeacherDashboard()
+        screen = Screen(name="TeacherDashboard")
         screen.add_widget(self.connect_page)
         self.screen_manager.add_widget(screen)
 

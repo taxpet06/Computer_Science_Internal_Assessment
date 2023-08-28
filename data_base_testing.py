@@ -9,11 +9,11 @@ def we_addin():
     mydb = myclient["IA"]
     mycol = mydb["Exercices"]
     type = "true_false"
-    question = "Eisai Mparmpouniaris"
+    question = "O Petros Zbabadoboulaei?"
     option = 1
-    all_options = ["3", "5", "8"]
+    all_options = ["ego", "egv", "Petros Taxiarchis", "o gios mou"]
     correct = ["True"]
-    explanation_text = "Fysika kai eisai barbouniaris"
+    explanation_text = "safestata"
     mydict = {"exercice_type": type, "question_text": question, "options": option, "correct_answer": correct, "all_options": all_options, "explanation": explanation_text}
     x= mycol.insert_one(mydict)
 we_addin()
