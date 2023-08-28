@@ -12,6 +12,8 @@ from kivy.uix.button import Button
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.progressbar import ProgressBar
 from kivy.uix.textinput import TextInput
+from kivy.uix.popup import Popup
+from kivy.uix.floatlayout import FloatLayout
 from data_base_testing import we_addin
 import math
 Window.size = (720*0.65, 1280*0.65)
@@ -39,6 +41,7 @@ correctdb = []
 global exp_db
 exp_db = ""
 #
+
 class Home(GridLayout):
     def login(self):
         print(self)
@@ -103,6 +106,7 @@ class AddDrill(GridLayout):
         global exp_db
         questiondb = self.ids.question_text.text
         exp_db = self.ids.explanation_text.text
+        optiondb = self.ids.option_slider.value
         we_addin(tags,mytype,questiondb, optiondb, all_optionsdb, correctdb, exp_db)
         pass
     def addremove_tag(self, value, active):
@@ -114,6 +118,15 @@ class AddDrill(GridLayout):
     def change_type(self, value):
         global mytype
         mytype = value
+        if mytype == "true_false" or mytype == "free":
+            self.ids.option_slider.value = 1
+            self.ids.option_slider.disabled = True
+        else:
+            self.ids.option_slider.disabled = False
+    def slider(self,value):
+        global optiondb
+        optiondb = value
+        self.ids.options.text = "Options " + str(value)
 
 class TeacherLogin(GridLayout):
     def home(self):

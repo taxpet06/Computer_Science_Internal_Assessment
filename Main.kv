@@ -115,6 +115,7 @@
         text: ""
         hint_text : "Enter passcode here"
         hint_text_color: 1,1,1,1
+        password: True
         font_size : 20
         color : 1,1,1,1
         foreground_color : 1,1,1,1
@@ -288,6 +289,20 @@
         foreground_color : 1,1,1,1
         background_color : 0.482, 0.82, 0.38, 1
         multiline : False
+    GridLayout:
+        rows: 2
+        Label:
+            id: options
+            text: 'Options '
+            font_size: 20
+            color: 1,1,1,1
+        Slider:
+            id: option_slider
+            min: 1
+            max: 10
+            step: 1
+            value: 1
+            on_value: root.slider(self.value)
     TextInput:
         id: explanation_text
         hint_text : "Enter explanation here"
