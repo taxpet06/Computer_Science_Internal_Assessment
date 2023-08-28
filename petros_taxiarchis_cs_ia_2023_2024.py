@@ -44,7 +44,6 @@ exp_db = ""
 
 class Home(GridLayout):
     def login(self):
-        print(self)
         latinapp.screen_manager.current = "TeacherLogin"
     def exercice(self):
         latinapp.screen_manager.current = "Exercice"
@@ -95,6 +94,21 @@ class TeacherDashboard(GridLayout):
     def home(self):
         latinapp.screen_manager.current = "Home"
 
+class DrillList(GridLayout):
+    #self.build
+    def build(self, instance):
+        self.remove_widget(instance)
+        myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+        mydb = myclient["IA"]
+        mycol = mydb["Exercices"]
+        mylist = list(mycol.find())
+        for i in mylist:
+            self.ids.carousel.add_widget(Button(text = i["question_text"], font_size = 20, background_color = (0.459, 0.722, 0.31, 1), background_normal=''))
+    def home(self):
+        latinapp.screen_manager.current = "Home"
+    def add(self):
+        latinapp.screen_manager.current = "AddDrill"
+
 class AddDrill(GridLayout):
     def add_to_db(self):
         global tags
@@ -107,7 +121,7 @@ class AddDrill(GridLayout):
         questiondb = self.ids.question_text.text
         exp_db = self.ids.explanation_text.text
         optiondb = self.ids.option_slider.value
-        we_addin(tags,mytype,questiondb, optiondb, all_optionsdb, correctdb, exp_db)
+        we_addin(mytype,tags,questiondb, optiondb, all_optionsdb, correctdb, exp_db)
         pass
     def addremove_tag(self, value, active):
         global tags
@@ -115,9 +129,32 @@ class AddDrill(GridLayout):
             tags.append(value)
         else:
             tags.remove(value)
+    def delete_from_alloptions(self):
+        global all_optionsdb
+        if all_optionsdb:
+            all_optionsdb.pop()
+        self.ids.all_options.text = str(all_optionsdb)
+        pass
+    def add_to_alloptions(self):
+        global all_optionsdb
+        all_optionsdb.append(self.ids.one_option.text)
+        self.ids.all_options.text = str(all_optionsdb)
+    def delete_from_allanswers(self):
+        global correctdb
+        if correctdb:
+            correctdb.pop()
+        self.ids.all_answers.text = str(correctdb)
+        pass
+    def add_to_allanswers(self):
+        global correctdb
+        correctdb.append(self.ids.one_answer.text)
+        self.ids.all_answers.text = str(correctdb)
+    def home(self):
+        latinapp.screen_manager.current = "Home"
     def change_type(self, value):
         global mytype
         mytype = value
+        mytype = str(mytype)
         if mytype == "true_false" or mytype == "free":
             self.ids.option_slider.value = 1
             self.ids.option_slider.disabled = True
@@ -338,6 +375,12 @@ class MainApp(App):
         screen = Screen(name="AddDrill")
         screen.add_widget(self.connect_page)
         self.screen_manager.add_widget(screen)
+
+        self.connect_page = DrillList()
+        screen = Screen(name="DrillList")
+        screen.add_widget(self.connect_page)
+        self.screen_manager.add_widget(screen)
+
 
         return self.screen_manager
 

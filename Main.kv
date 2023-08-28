@@ -130,7 +130,52 @@
         background_normal: ''
         #background_down: ''  
         on_press : root.home()
+<DrillList>:
+    spacing : 10,10
+    padding : 10,10
+    rows: 3
+    GridLayout:
+        spacing : 10,10
+        padding : 10,10
+        rows:1
+        cols:2
+        Label:
+            id:drills
+            text: "Here are all the Drills"
+            font_size : 20
+            color : 1,1,1,1
+        Button:
+            text:"Add Drill"
+            font_size : 20
+            border: 2,2,2,2
+            background_color: 0.459, 0.722, 0.31, 1  
+            background_normal: ''
+            #background_down: ''  
+            on_press : root.add()
+    BoxLayout:
+        oritentation: "vertical"
+        Carousel:
+            id: carousel
+            direction:"bottom"
+            GridLayout:
+                rows : 2
+                Label:
+                    text: 'Press Below to\nShow Scrollable Drills'
+                    font_size: 20
+                    color: 1,1,1,1
+                CheckBox:
+                    group : 'v'
+                    id: g
+                    on_active : root.build()
 
+    Button:
+        text:"Home"
+        font_size : 20
+        border: 2,2,2,2
+        background_color: 0.459, 0.722, 0.31, 1  
+        background_normal: ''
+        #background_down: ''  
+        on_press : root.home()
 <TeacherDashboard>:
     spacing : 10,10
     padding : 10,10
@@ -198,7 +243,7 @@
         color: 1,1,1,1
 
 <AddDrill>:
-    rows : 9
+    rows : 10
     spacing : 10,10
     padding : 10,10
     GridLayout:
@@ -303,6 +348,88 @@
             step: 1
             value: 1
             on_value: root.slider(self.value)
+    GridLayout:
+        rows:2
+        GridLayout:
+            cols:2
+            Label:
+                id: all_options_text
+                text: 'All Options: '
+                font_size: 20
+                color: 1,1,1,1
+            Label:
+                id: all_options
+                text: ''
+                font_size: 20
+                color: 1,1,1,1
+        GridLayout:
+            cols:3
+            TextInput:
+                id: one_option
+                hint_text : "Enter 1 option"
+                hint_text_color: 1,1,1,1
+                font_size : 20
+                color : 1,1,1,1
+                foreground_color : 1,1,1,1
+                background_color : 0.482, 0.82, 0.38, 1
+                multiline : False
+            Button:
+                text: "Add"
+                font_size : 20
+                border: 2,2,2,2
+                background_color: 0.459, 0.722, 0.31, 1  
+                background_normal: ''
+                #background_down: ''  
+                on_press : root.add_to_alloptions()
+            Button:
+                text: "Delete"
+                font_size : 20
+                border: 2,2,2,2
+                background_color: 0.459, 0.722, 0.31, 1  
+                background_normal: ''
+                #background_down: ''  
+                on_press : root.delete_from_alloptions()
+    GridLayout:
+        rows:2
+        GridLayout:
+            cols:2
+            Label:
+                id: all_answers_text
+                text: 'Answers: '
+                font_size: 20
+                color: 1,1,1,1
+            Label:
+                id: all_answers
+                text: ''
+                font_size: 20
+                color: 1,1,1,1
+        GridLayout:
+            cols:3
+            TextInput:
+                id: one_answer
+                hint_text : "Enter 1 answer"
+                hint_text_color: 1,1,1,1
+                font_size : 20
+                color : 1,1,1,1
+                foreground_color : 1,1,1,1
+                background_color : 0.482, 0.82, 0.38, 1
+                multiline : False
+            Button:
+                text: "Add"
+                font_size : 20
+                border: 2,2,2,2
+                background_color: 0.459, 0.722, 0.31, 1  
+                background_normal: ''
+                #background_down: ''  
+                on_press : root.add_to_allanswers()
+            Button:
+                text: "Delete"
+                font_size : 20
+                border: 2,2,2,2
+                background_color: 0.459, 0.722, 0.31, 1  
+                background_normal: ''
+                #background_down: ''  
+                on_press : root.delete_from_allanswers()
     TextInput:
         id: explanation_text
         hint_text : "Enter explanation here"
@@ -314,9 +441,17 @@
         multiline : False
     Button:
         text: "Add to \nQuestion Database"
-        font_size : 40
+        font_size : 20
         border: 2,2,2,2
         background_color: 0.459, 0.722, 0.31, 1  
         background_normal: ''
         #background_down: ''  
         on_press : root.add_to_db()
+    Button:
+        text: "Home"
+        font_size : 20
+        border: 2,2,2,2
+        background_color: 0.459, 0.722, 0.31, 1  
+        background_normal: ''
+        #background_down: ''  
+        on_press : root.home()
