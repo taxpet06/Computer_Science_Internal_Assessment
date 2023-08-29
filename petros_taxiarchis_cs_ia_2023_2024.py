@@ -29,10 +29,14 @@ global passcode
 passcode = "passcode"
 score = 0
 looper = True
+global quiz_kind
+global task_list
+global actual_tasks
 #variables for database and editing
 global current_drill
 global current_drill_id
 global myupdate
+global full_task_list
 myupdate = False
 global tags
 tags = []
@@ -49,17 +53,6 @@ correctdb = []
 global exp_db
 exp_db = ""
 #
-
-# class MyEventDispatcher(EventDispatcher):
-#     def __init__(self, **kwargs):
-#         self.register_event_type('on_pwease')
-#         super(MyEventDispatcher, self).__init__(**kwargs)
-
-#     def do_something(self, value):
-#         self.dispatch('on_pwease', value)
-
-#     def on_pwease(self, *args):
-#         self.update
 
 class Home(GridLayout):
     def login(self):
@@ -297,19 +290,26 @@ class Exercice(GridLayout):
     mycol = mydb["Exercices"]
     global task_amount
     task_amount = (len(list(mycol.find())))
+    global full_task_list
+    full_task_list = list(mycol.find())
     global task_list
+    global actual_tasks
     task_list = []
     def get_random_document(collection):
-        count = collection.count_documents({})  # Get the total number of documents in the collection
-        random_index = random.randint(0, count - 1)  # Generate a random index within the range of document count
-        random_document = collection.find().limit(1).skip(random_index)[0]
+        global full_task_list
+        # count = collection.count_documents({})  # Get the total number of documents in the collection
+        random_index = random.randint(0, len(full_task_list))  # Generate a random index within the range of document count
+        # random_document = collection.find().limit(1).skip(random_index)[0]
+        random_document = full_task_list.pop(random_index)
         return random_document
     if task_amount < 10:
         for i in range(1,task_amount+1):
             task_list.append(get_random_document(mycol))
+            actual_tasks = len(task_list)
     else:
         for i in range(1,11):
             task_list.append(get_random_document(mycol))
+            actual_tasks = 10
     global current_object
     global current_index
     current_index = 0
@@ -447,10 +447,11 @@ class Exercice(GridLayout):
         global task_list
         global current_index
         global right_answers
+        global actual_tasks
         global score
         current_index += 1
-        if current_index == len(task_list) or current_index > len(task_list):
-            score = math.ceil((right_answers/task_amount)*100)
+        if current_index == actual_tasks:
+            score = math.ceil((right_answers/actual_tasks)*100)
             latinapp.screen_manager.current = "Results"
         else:
             self.build()
