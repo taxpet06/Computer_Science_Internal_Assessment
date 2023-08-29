@@ -177,7 +177,7 @@ class ModifyDrill(GridLayout):
         optiondb = self.ids.option_slider.value
         we_addin(mytype,tags,questiondb, optiondb, all_optionsdb, correctdb, exp_db)
         global current_drill
-        mycol.remove(current_drill)
+        mycol.delete_one(current_drill[0])
     def addremove_tag(self, value, active):
         global tags
         if active:
