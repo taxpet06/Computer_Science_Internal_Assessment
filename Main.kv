@@ -158,6 +158,7 @@
             id: carousel
             direction:"bottom"
             GridLayout:
+                id : delete_me
                 rows : 2
                 Label:
                     text: 'Press Below to\nShow Scrollable Drills'
@@ -166,7 +167,7 @@
                 CheckBox:
                     group : 'v'
                     id: g
-                    on_active : root.build()
+                    on_active : root.build("delete_me")
 
     Button:
         text:"Home"
@@ -441,6 +442,223 @@
         multiline : False
     Button:
         text: "Add to \nQuestion Database"
+        font_size : 20
+        border: 2,2,2,2
+        background_color: 0.459, 0.722, 0.31, 1  
+        background_normal: ''
+        #background_down: ''  
+        on_press : root.add_to_db()
+    Button:
+        text: "Home"
+        font_size : 20
+        border: 2,2,2,2
+        background_color: 0.459, 0.722, 0.31, 1  
+        background_normal: ''
+        #background_down: ''  
+        on_press : root.home()
+
+<ModifyDrill>:
+    rows : 10
+    spacing : 10,10
+    padding : 10,10
+    GridLayout:
+        cols:2
+        Label:
+            text: 'Tags'
+            font_size: 20
+            color: 1,1,1,1
+        GridLayout:
+            rows:3
+            cols:2
+            Label:
+                text: 'Grammar'
+                font_size: 20
+                color: 1,1,1,1
+            CheckBox:
+                id: grammar
+                on_press : root.addremove_tag("grammar", self.active)
+                active: False
+            Label:
+                text: 'Vocabulary'
+                font_size: 20
+                color: 1,1,1,1
+            CheckBox:
+                id: vocabulary
+                on_press : root.addremove_tag("vocabulary", self.active)
+                active: False
+            Label:
+                text: 'Syntax'
+                font_size: 20
+                color: 1,1,1,1
+            CheckBox:
+                id: syntax
+                on_press : root.addremove_tag("syntax", self.active)
+                active: False
+    GridLayout:
+        cols:2
+        Label:
+            text: 'Question Type'
+            font_size: 20
+            color: 1,1,1,1
+        GridLayout:
+            rows:5
+            cols:2
+            Label:
+                text: 'Multiple Choice'
+                font_size: 20
+                color: 1,1,1,1
+            CheckBox:
+                group: "v"
+                id: multiple_choice
+                on_press : root.change_type("multiple_choice")
+            Label:
+                text: 'True or False'
+                font_size: 20
+                color: 1,1,1,1
+            CheckBox:
+                group: "v"
+                id: true_false
+                on_press : root.change_type("true_false")
+            Label:
+                text: 'Free Response'
+                font_size: 20
+                color: 1,1,1,1
+            CheckBox:
+                group: "v"
+                id: free
+                on_press : root.change_type("free")
+            Label:
+                text: 'Conncecting'
+                font_size: 20
+                color: 1,1,1,1
+            CheckBox:
+                group: "v"
+                id: connecting
+                on_press : root.change_type("connecting")
+            Label:
+                text: 'Ordering'
+                font_size: 20
+                color: 1,1,1,1
+            CheckBox:
+                group: "v"
+                id: ordering
+                on_press : root.change_type("ordering")
+    TextInput:
+        id: question_text
+        hint_text : "Enter question here"
+        hint_text_color: 1,1,1,1
+        font_size : 20
+        color : 1,1,1,1
+        foreground_color : 1,1,1,1
+        background_color : 0.482, 0.82, 0.38, 1
+        multiline : False
+    GridLayout:
+        rows: 2
+        Label:
+            id: options
+            text: 'Options '
+            font_size: 20
+            color: 1,1,1,1
+        Slider:
+            id: option_slider
+            min: 1
+            max: 10
+            step: 1
+            value: 1
+            on_value: root.slider(self.value)
+    GridLayout:
+        rows:2
+        GridLayout:
+            cols:2
+            Label:
+                id: all_options_text
+                text: 'All Options: '
+                font_size: 20
+                color: 1,1,1,1
+            Label:
+                id: all_options
+                text: ''
+                font_size: 20
+                color: 1,1,1,1
+        GridLayout:
+            cols:3
+            TextInput:
+                id: one_option
+                hint_text : "Enter 1 option"
+                hint_text_color: 1,1,1,1
+                font_size : 20
+                color : 1,1,1,1
+                foreground_color : 1,1,1,1
+                background_color : 0.482, 0.82, 0.38, 1
+                multiline : False
+            Button:
+                text: "Add"
+                font_size : 20
+                border: 2,2,2,2
+                background_color: 0.459, 0.722, 0.31, 1  
+                background_normal: ''
+                #background_down: ''  
+                on_press : root.add_to_alloptions()
+            Button:
+                text: "Delete"
+                font_size : 20
+                border: 2,2,2,2
+                background_color: 0.459, 0.722, 0.31, 1  
+                background_normal: ''
+                #background_down: ''  
+                on_press : root.delete_from_alloptions()
+    GridLayout:
+        rows:2
+        GridLayout:
+            cols:2
+            Label:
+                id: all_answers_text
+                text: 'Answers: '
+                font_size: 20
+                color: 1,1,1,1
+            Label:
+                id: all_answers
+                text: ''
+                font_size: 20
+                color: 1,1,1,1
+        GridLayout:
+            cols:3
+            TextInput:
+                id: one_answer
+                hint_text : "Enter 1 answer"
+                hint_text_color: 1,1,1,1
+                font_size : 20
+                color : 1,1,1,1
+                foreground_color : 1,1,1,1
+                background_color : 0.482, 0.82, 0.38, 1
+                multiline : False
+            Button:
+                text: "Add"
+                font_size : 20
+                border: 2,2,2,2
+                background_color: 0.459, 0.722, 0.31, 1  
+                background_normal: ''
+                #background_down: ''  
+                on_press : root.add_to_allanswers()
+            Button:
+                text: "Delete"
+                font_size : 20
+                border: 2,2,2,2
+                background_color: 0.459, 0.722, 0.31, 1  
+                background_normal: ''
+                #background_down: ''  
+                on_press : root.delete_from_allanswers()
+    TextInput:
+        id: explanation_text
+        hint_text : "Enter explanation here"
+        hint_text_color: 1,1,1,1
+        font_size : 20
+        color : 1,1,1,1
+        foreground_color : 1,1,1,1
+        background_color : 0.482, 0.82, 0.38, 1
+        multiline : False
+    Button:
+        text: "Save"
         font_size : 20
         border: 2,2,2,2
         background_color: 0.459, 0.722, 0.31, 1  

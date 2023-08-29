@@ -1,7 +1,9 @@
 import kivy
 import pymongo
+from kivy.clock import Clock
 import time
 from kivy.app import App
+from kivy.lang import Builder
 from kivy.uix.gridlayout import GridLayout
 from kivy.graphics import Rectangle, Color
 from kivy.core.window import Window
@@ -15,6 +17,8 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.popup import Popup
 from kivy.uix.floatlayout import FloatLayout
 from data_base_testing import we_addin
+from bson.objectid import ObjectId
+from kivy.event import EventDispatcher
 import math
 Window.size = (720*0.65, 1280*0.65)
 import random
@@ -24,8 +28,12 @@ global score
 global passcode 
 passcode = "passcode"
 score = 0
-
+looper = True
 #variables for database and editing
+global current_drill
+global current_drill_id
+global myupdate
+myupdate = False
 global tags
 tags = []
 global mytype
@@ -41,6 +49,17 @@ correctdb = []
 global exp_db
 exp_db = ""
 #
+
+# class MyEventDispatcher(EventDispatcher):
+#     def __init__(self, **kwargs):
+#         self.register_event_type('on_pwease')
+#         super(MyEventDispatcher, self).__init__(**kwargs)
+
+#     def do_something(self, value):
+#         self.dispatch('on_pwease', value)
+
+#     def on_pwease(self, *args):
+#         self.update
 
 class Home(GridLayout):
     def login(self):
@@ -91,23 +110,118 @@ class TeacherDashboard(GridLayout):
         latinapp.screen_manager.current = "AddDrill"
     def drills(self):
         latinapp.screen_manager.current = "DrillList"
+        #DrillList.build(DrillList(),"")
     def home(self):
         latinapp.screen_manager.current = "Home"
 
 class DrillList(GridLayout):
-    #self.build
     def build(self, instance):
-        self.remove_widget(instance)
+        self.ids.carousel.clear_widgets()
         myclient = pymongo.MongoClient("mongodb://localhost:27017/")
         mydb = myclient["IA"]
         mycol = mydb["Exercices"]
         mylist = list(mycol.find())
         for i in mylist:
-            self.ids.carousel.add_widget(Button(text = i["question_text"], font_size = 20, background_color = (0.459, 0.722, 0.31, 1), background_normal=''))
+            self.ids.carousel.add_widget(Button(text = i["question_text"]+"\n"+str(i["_id"]), font_size = 20, background_color = (0.459, 0.722, 0.31, 1), background_normal='', on_press = self.update))
     def home(self):
         latinapp.screen_manager.current = "Home"
     def add(self):
         latinapp.screen_manager.current = "AddDrill"
+    def update(self, instance):
+        global current_drill_id
+        current_drill_id = instance.text[instance.text.find('\n')+1:]
+        global myupdate
+        myupdate = True 
+        latinapp.screen_manager.current = "ModifyDrill"
+        ModifyDrill.update(ModifyDrill())
+
+class ModifyDrill(GridLayout):
+    global myupdate
+    def update(self):
+        Builder.load_file("Main.kv")
+        global current_drill_id
+        global current_drill
+        global myupdate
+        global tags
+        if myupdate:
+            myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+            mydb = myclient["IA"]
+            mycol = mydb["Exercices"]
+            current_drill = [i for i in mycol.find({"_id": ObjectId(current_drill_id)})]
+            # print(current_drill)
+            # if "grammar" in current_drill[0]["exercice_tags"]:
+            #     self.ids.grammar.active = True
+            #     tags.append("grammar")
+            # elif "syntax" in current_drill[0]["exercice_tags"]:
+            #     self.ids.syntax.active = True
+            #     tags.append("syntax")
+            # elif "vocabulary" in current_drill[0]["exercice_tags"]:
+            #     self.ids.vocabulary.active = True
+            #     tags.append("vocabulary")
+            # else: 
+            #     pass
+            # self.ids.question_text.text = current_drill[0]["question_text"]
+    def add_to_db(self):
+        global tags
+        global mytype
+        global questiondb
+        global optiondb
+        global all_optionsdb
+        global correctdb
+        global exp_db
+        myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+        mydb = myclient["IA"]
+        mycol = mydb["Exercices"]
+        questiondb = self.ids.question_text.text
+        exp_db = self.ids.explanation_text.text
+        optiondb = self.ids.option_slider.value
+        we_addin(mytype,tags,questiondb, optiondb, all_optionsdb, correctdb, exp_db)
+        global current_drill
+        mycol.remove(current_drill)
+    def addremove_tag(self, value, active):
+        global tags
+        if active:
+            tags.append(value)
+        else:
+            tags.remove(value)
+    def delete_from_alloptions(self):
+        global all_optionsdb
+        if all_optionsdb:
+            all_optionsdb.pop()
+        self.ids.all_options.text = str(all_optionsdb)
+        pass
+    def add_to_alloptions(self):
+        global all_optionsdb
+        all_optionsdb.append(self.ids.one_option.text)
+        self.ids.all_options.text = str(all_optionsdb)
+    def delete_from_allanswers(self):
+        global correctdb
+        if correctdb:
+            correctdb.pop()
+        self.ids.all_answers.text = str(correctdb)
+        pass
+    def add_to_allanswers(self):
+        global correctdb
+        correctdb.append(self.ids.one_answer.text)
+        self.ids.all_answers.text = str(correctdb)
+    def home(self):
+        latinapp.screen_manager.current = "Home"
+    def change_type(self, value):
+        global mytype
+        mytype = value
+        mytype = str(mytype)
+        if mytype == "true_false" or mytype == "free":
+            self.ids.option_slider.value = 1
+            self.ids.option_slider.disabled = True
+        else:
+            self.ids.option_slider.disabled = False
+    def slider(self,value):
+        global optiondb
+        optiondb = value
+        self.ids.options.text = "Options " + str(value)
+    # ev = MyEventDispatcher()
+    # ev.bind(on_test=update)
+    # ev.do_something('pwease')
 
 class AddDrill(GridLayout):
     def add_to_db(self):
@@ -381,9 +495,13 @@ class MainApp(App):
         screen.add_widget(self.connect_page)
         self.screen_manager.add_widget(screen)
 
-
-        return self.screen_manager
+        self.connect_page = ModifyDrill()
+        screen = Screen(name="ModifyDrill")
+        screen.add_widget(self.connect_page)
+        self.screen_manager.add_widget(screen)
+        return (self.screen_manager)
 
 if __name__ == "__main__":
     latinapp = MainApp()
     latinapp.run()
+
