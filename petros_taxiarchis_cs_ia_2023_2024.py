@@ -29,7 +29,7 @@ global passcode
 passcode = "passcode"
 score = 0
 looper = True
-global quiz_kind
+global quiz_kind #mc, fr, cw, ow, rw, grammar, vocabulary, syntax, #random
 global task_list
 global actual_tasks
 #variables for database and editing
@@ -57,7 +57,9 @@ exp_db = ""
 class Home(GridLayout):
     def login(self):
         latinapp.screen_manager.current = "TeacherLogin"
-    def exercice(self):
+    def begin(self):
+        global quiz_kind
+        quiz_kind = "random"
         latinapp.screen_manager.current = "Exercice"
 
 class Results(GridLayout):
