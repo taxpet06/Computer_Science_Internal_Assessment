@@ -26,10 +26,13 @@ kivy.require('1.11.1')
 Window.clearcolor = (0.1, 0.1, 0.2, 1)
 global score
 global passcode 
+global once 
+once = 1
 passcode = "passcode"
 score = 0
 looper = True
 global quiz_kind #mc, fr, cw, ow, rw, grammar, vocabulary, syntax, #random
+quiz_kind = ""
 global task_list
 global actual_tasks
 #variables for database and editing
@@ -285,33 +288,27 @@ class TeacherLogin(GridLayout):
             self.ids.credential.text = "Sorry, wrong credential"
 
 class Exercice(GridLayout):
+    global quiz_kind
     exp_text = ""
     myclient = pymongo.MongoClient("mongodb://localhost:27017/")
     mydb = myclient["IA"]
     global mycol
     mycol = mydb["Exercices"]
     global task_amount
-    task_amount = (len(list(mycol.find())))
+    # task_amount = (len(list(mycol.find())))
     global full_task_list
-    full_task_list = list(mycol.find())
+    # full_task_list = list(mycol.find())
     global task_list
     global actual_tasks
     task_list = []
-    def get_random_document(collection):
+    def get_random_document(self,collection):
         global full_task_list
+        global random_index
         # count = collection.count_documents({})  # Get the total number of documents in the collection
-        random_index = random.randint(0, len(full_task_list))  # Generate a random index within the range of document count
+        random_index = random.randint(0, len(full_task_list)-1)  # Generate a random index within the range of document count
         # random_document = collection.find().limit(1).skip(random_index)[0]
         random_document = full_task_list.pop(random_index)
         return random_document
-    if task_amount < 10:
-        for i in range(1,task_amount+1):
-            task_list.append(get_random_document(mycol))
-            actual_tasks = len(task_list)
-    else:
-        for i in range(1,11):
-            task_list.append(get_random_document(mycol))
-            actual_tasks = 10
     global current_object
     global current_index
     current_index = 0
@@ -328,7 +325,39 @@ class Exercice(GridLayout):
         global Next
         global Submit
         global current_index
-        current_object = task_list[current_index]
+        global right_answers
+        global myclient
+        global mydb
+        global mycol
+        global current_object
+        global current_answer
+        global task_amount
+        global full_task_list
+        global task_list
+        global actual_tasks
+        global once
+        exp_text = ""
+        myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+        mydb = myclient["IA"]
+        mycol = mydb["Exercices"]
+        full_task_list = list(mycol.find())
+        task_amount = len(full_task_list)
+        if once == 1:
+            if task_amount < 10:
+                if quiz_kind == "random":
+                    for i in range(1,full_task_list+1):
+                        task_list.append(self.get_random_document(mycol))
+                        actual_tasks = len(task_list)
+            else:
+                if quiz_kind == "random":
+                    for i in range(1,11):
+                        task_list.append(self.get_random_document(mycol))
+                        actual_tasks = 10
+            once = 0
+            current_index = 0
+            right_answers = 0
+            current_object = task_list[current_index]
+        
         current_answer = ""
         self.clear_widgets()
 
@@ -456,7 +485,10 @@ class Exercice(GridLayout):
             score = math.ceil((right_answers/actual_tasks)*100)
             latinapp.screen_manager.current = "Results"
         else:
+            print("Here",len(task_list), current_index)
+            current_object = task_list[current_index]
             self.build()
+
 
 class MainApp(App):
 
