@@ -301,6 +301,13 @@ class Exercice(GridLayout):
     global task_list
     global actual_tasks
     task_list = []
+    def get_random_tag_document(self,collection):
+        global full_task_list
+        global random_index
+        global quiz_kind
+        random_index = random.randint(0, len(full_task_list)-1)
+        random_document = full_task_list.pop(random_index)
+        return random_document
     def get_random_type_document(self,collection):
         global full_task_list
         global random_index
@@ -355,8 +362,13 @@ class Exercice(GridLayout):
                     for i in range(1,len(full_task_list)+1):
                         task_list.append(self.get_random_document(mycol))
                         actual_tasks = len(task_list)
-                if quiz_kind == "multiple_choice":
+                if quiz_kind == "multiple_choice" or quiz_kind == "true_false" or quiz_kind == "free" or quiz_kind == "connecting" or quiz_kind == "ordering":
                     full_task_list = list(mycol.find({"exercice_type":quiz_kind}))
+                    for i in range(1,len(full_task_list)+1):
+                        task_list.append(self.get_random_type_document(mycol))
+                        actual_tasks = len(task_list)
+                if quiz_kind == "grammar" or quiz_kind == "syntax" or quiz_kind == "vocabulary":
+                    full_task_list = list(mycol.find({"exercice_tags":quiz_kind}))
                     for i in range(1,len(full_task_list)+1):
                         task_list.append(self.get_random_type_document(mycol))
                         actual_tasks = len(task_list)
@@ -365,8 +377,13 @@ class Exercice(GridLayout):
                     for i in range(1,11):
                         task_list.append(self.get_random_document(mycol))
                         actual_tasks = 10
-                if quiz_kind == "multiple_choice":
+                if quiz_kind == "multiple_choice" or quiz_kind == "true_false" or quiz_kind == "free" or quiz_kind == "connecting" or quiz_kind == "ordering":
                     full_task_list = list(mycol.find({"exercice_type":quiz_kind}))
+                    for i in range(1,len(full_task_list)+1):
+                        task_list.append(self.get_random_type_document(mycol))
+                        actual_tasks = len(task_list)
+                if quiz_kind == "grammar" or quiz_kind == "syntax" or quiz_kind == "vocabulary":
+                    full_task_list = list(mycol.find({"exercice_tags":quiz_kind}))
                     for i in range(1,len(full_task_list)+1):
                         task_list.append(self.get_random_type_document(mycol))
                         actual_tasks = len(task_list)
