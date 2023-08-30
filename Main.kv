@@ -29,7 +29,7 @@
                 background_color: 0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''
-                on_press : root.begin("mc")
+                on_press : root.begin("multiple_choice")
             Button:
                 id:free
                 text : "Free\nResponse"
@@ -38,7 +38,7 @@
                 background_color: 0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''
-                on_press : root.begin("fr")
+                on_press : root.begin("free")
             Button:
                 id:connect
                 text : "Connecting\nWords"
@@ -47,7 +47,7 @@
                 background_color: 0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''
-                on_press : root.begin("cw")
+                on_press : root.begin("connecting")
             Button:
                 id:order
                 text : "Ordering\nWords"
@@ -56,7 +56,7 @@
                 background_color: 0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''
-                on_press : root.begin("ow")
+                on_press : root.begin("ordering")
             Button:
                 id:true
                 text : "True/False"
@@ -65,7 +65,7 @@
                 background_color: 0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''
-                on_press : root.begin("rw")
+                on_press : root.begin("true_false")
         Label:
             id:content
             text : "Quizzes By Content"

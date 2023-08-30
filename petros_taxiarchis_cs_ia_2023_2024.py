@@ -301,6 +301,13 @@ class Exercice(GridLayout):
     global task_list
     global actual_tasks
     task_list = []
+    def get_random_type_document(self,collection):
+        global full_task_list
+        global random_index
+        global quiz_kind
+        random_index = random.randint(0, len(full_task_list)-1)
+        random_document = full_task_list.pop(random_index)
+        return random_document
     def get_random_document(self,collection):
         global full_task_list
         global random_index
@@ -345,14 +352,24 @@ class Exercice(GridLayout):
         if once == 1:
             if task_amount < 10:
                 if quiz_kind == "random":
-                    for i in range(1,full_task_list+1):
+                    for i in range(1,len(full_task_list)+1):
                         task_list.append(self.get_random_document(mycol))
+                        actual_tasks = len(task_list)
+                if quiz_kind == "multiple_choice":
+                    full_task_list = list(mycol.find({"exercice_type":quiz_kind}))
+                    for i in range(1,len(full_task_list)+1):
+                        task_list.append(self.get_random_type_document(mycol))
                         actual_tasks = len(task_list)
             else:
                 if quiz_kind == "random":
                     for i in range(1,11):
                         task_list.append(self.get_random_document(mycol))
                         actual_tasks = 10
+                if quiz_kind == "multiple_choice":
+                    full_task_list = list(mycol.find({"exercice_type":quiz_kind}))
+                    for i in range(1,len(full_task_list)+1):
+                        task_list.append(self.get_random_type_document(mycol))
+                        actual_tasks = len(task_list)
             once = 0
             current_index = 0
             right_answers = 0
