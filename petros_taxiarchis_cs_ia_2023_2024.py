@@ -409,8 +409,8 @@ class Exercice(GridLayout):
             self.add_widget(Explanation)
             Buttons = GridLayout(cols = 2, spacing=(10,10),padding=(10,10))
             self.add_widget(Buttons)
-            Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), background_color=(0.459, 0.722, 0.31, 1), background_normal ='', on_press = self.reveal_answer, disabled = True)
-            Next = Button(text="Next",font_size = 20, border= (2,2,2,2), background_color=(0.459, 0.722, 0.31, 1), background_normal ='', disabled = True, on_press = self.next_task)
+            Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), halign="center", background_color=(0.459, 0.722, 0.31, 1), background_normal ='', on_press = self.reveal_answer, disabled = True)
+            Next = Button(text="Next",font_size = 20, border= (2,2,2,2), halign="center", background_color=(0.459, 0.722, 0.31, 1), background_normal ='', disabled = True, on_press = self.next_task)
             Buttons.add_widget(Submit)
             Buttons.add_widget(Next)
             if current_answer != "":
@@ -428,8 +428,8 @@ class Exercice(GridLayout):
             self.add_widget(Explanation)
             Buttons = GridLayout(cols = 2, spacing=(10,10),padding=(10,10))
             self.add_widget(Buttons)
-            Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), background_color=(0.459, 0.722, 0.31, 1), background_normal ='', on_press = self.reveal_answer, disabled = False)
-            Next = Button(text="Next",font_size = 20, border= (2,2,2,2), background_color=(0.459, 0.722, 0.31, 1), background_normal ='', disabled = True, on_press = self.next_task)
+            Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), halign="center", background_color=(0.459, 0.722, 0.31, 1), background_normal ='', on_press = self.reveal_answer, disabled = False)
+            Next = Button(text="Next",font_size = 20, border= (2,2,2,2), halign="center", background_color=(0.459, 0.722, 0.31, 1), background_normal ='', disabled = True, on_press = self.next_task)
             Buttons.add_widget(Submit)
             Buttons.add_widget(Next)
             if current_answer != "":
@@ -449,8 +449,8 @@ class Exercice(GridLayout):
             self.add_widget(Explanation)
             Buttons = GridLayout(cols = 2, spacing=(10,10),padding=(10,10))
             self.add_widget(Buttons)
-            Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), background_color=(0.459, 0.722, 0.31, 1), background_normal ='', on_press = self.reveal_answer, disabled = True)
-            Next = Button(text="Next",font_size = 20, border= (2,2,2,2), background_color=(0.459, 0.722, 0.31, 1), background_normal ='', disabled = True, on_press = self.next_task)
+            Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), halign="center", background_color=(0.459, 0.722, 0.31, 1), background_normal ='', on_press = self.reveal_answer, disabled = True)
+            Next = Button(text="Next",font_size = 20, border= (2,2,2,2), halign="center", background_color=(0.459, 0.722, 0.31, 1), background_normal ='', disabled = True, on_press = self.next_task)
             Buttons.add_widget(Submit)
             Buttons.add_widget(Next)
             if current_answer != "":
