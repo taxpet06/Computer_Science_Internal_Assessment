@@ -21,31 +21,51 @@
             spacing : 10,10
             padding : 10,10
             cols:5
-            Label:
-                id:mc
-                text : "MC"
+            Button:
+                id:multiple
+                text : "Multiple\nChoice"
                 font_size : 20
-                color : 1,1,1,1
-            Label:
-                id:fr
-                text : "FR"
+                border: 2,2,2,2
+                background_color: 0.459, 0.722, 0.31, 1  
+                background_normal: ''
+                #background_down: ''
+                on_press : root.begin("mc")
+            Button:
+                id:free
+                text : "Free\nResponse"
                 font_size : 20
-                color : 1,1,1,1
-            Label:
-                id:cw
-                text : "CW"
+                border: 2,2,2,2
+                background_color: 0.459, 0.722, 0.31, 1  
+                background_normal: ''
+                #background_down: ''
+                on_press : root.begin("fr")
+            Button:
+                id:connect
+                text : "Connecting\nWords"
                 font_size : 20
-                color : 1,1,1,1
-            Label:
-                id:ow
-                text : "OW"
+                border: 2,2,2,2
+                background_color: 0.459, 0.722, 0.31, 1  
+                background_normal: ''
+                #background_down: ''
+                on_press : root.begin("cw")
+            Button:
+                id:order
+                text : "Ordering\nWords"
                 font_size : 20
-                color : 1,1,1,1
-            Label:
-                id:rw
-                text : "RW"
+                border: 2,2,2,2
+                background_color: 0.459, 0.722, 0.31, 1  
+                background_normal: ''
+                #background_down: ''
+                on_press : root.begin("ow")
+            Button:
+                id:true
+                text : "True/False"
                 font_size : 20
-                color : 1,1,1,1
+                border: 2,2,2,2
+                background_color: 0.459, 0.722, 0.31, 1  
+                background_normal: ''
+                #background_down: ''
+                on_press : root.begin("rw")
         Label:
             id:content
             text : "Quizzes By Content"
@@ -55,21 +75,33 @@
             spacing : 10,10
             padding : 10,10
             cols:3
-            Label:
+            Button:
                 id:grammar
                 text : "Grammar"
                 font_size : 20
-                color : 1,1,1,1
-            Label:
+                border: 2,2,2,2
+                background_color: 0.459, 0.722, 0.31, 1  
+                background_normal: ''
+                #background_down: ''
+                on_press : root.begin("grammar")
+            Button:
                 id:vocabulary
                 text : "Vocabulary"
                 font_size : 20
-                color : 1,1,1,1
-            Label:
+                border: 2,2,2,2
+                background_color: 0.459, 0.722, 0.31, 1  
+                background_normal: ''
+                #background_down: ''
+                on_press : root.begin("vocabulary")
+            Button:
                 id:syntax
                 text : "Syntax"
                 font_size : 20
-                color : 1,1,1,1
+                border: 2,2,2,2
+                background_color: 0.459, 0.722, 0.31, 1  
+                background_normal: ''
+                #background_down: ''
+                on_press : root.begin("syntax")
         Label:
             id:content
             text : "Random Quiz"
@@ -82,12 +114,12 @@
             Button:
                 id:begin
                 text : "Begin"
-                font_size : 40
+                font_size : 20
                 border: 2,2,2,2
                 background_color: 0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''
-                on_press : root.begin()
+                on_press : root.begin("random")
         Button:
             text:"Teacher Mode"
             font_size : 40

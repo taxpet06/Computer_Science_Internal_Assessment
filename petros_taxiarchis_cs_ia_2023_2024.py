@@ -60,9 +60,10 @@ exp_db = ""
 class Home(GridLayout):
     def login(self):
         latinapp.screen_manager.current = "TeacherLogin"
-    def begin(self):
+    def begin(self, kind):
         global quiz_kind
-        quiz_kind = "random"
+        quiz_kind = kind
+        print(quiz_kind)
         latinapp.screen_manager.current = "Exercice"
 
 class Results(GridLayout):
@@ -146,7 +147,6 @@ class ModifyDrill(GridLayout):
             mydb = myclient["IA"]
             mycol = mydb["Exercices"]
             current_drill = [i for i in mycol.find({"_id": ObjectId(current_drill_id)})]
-            # print(current_drill)
             # if "grammar" in current_drill[0]["exercice_tags"]:
             #     self.ids.grammar.active = True
             #     tags.append("grammar")
@@ -485,7 +485,6 @@ class Exercice(GridLayout):
             score = math.ceil((right_answers/actual_tasks)*100)
             latinapp.screen_manager.current = "Results"
         else:
-            print("Here",len(task_list), current_index)
             current_object = task_list[current_index]
             self.build()
 
