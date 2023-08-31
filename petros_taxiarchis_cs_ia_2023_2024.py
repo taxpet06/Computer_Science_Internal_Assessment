@@ -24,7 +24,7 @@ import math
 Window.size = (720*0.65, 1280*0.65)
 import random
 kivy.require('1.11.1')
-Window.clearcolor = (0.1, 0.1, 0.2, 1)
+Window.clearcolor = 'FFD5A6'
 global score
 global passcode 
 global once 
@@ -85,18 +85,28 @@ class Results(GridLayout):
         self.padding = (10,10)
         self.spacing = (10,10)
         text_score_label = Label(
-            text="Congratulations",
+            text="",
             font_size=40,
-            color=(1, 1, 1, 1)
+            color='5D3B23'
         )
+        if score >= 90:
+            text_score_label.text =  "Excellent"
+            sound = SoundLoader.load('Computer_Science_Internal_Assessment/c.wav')
+            sound.play()
+        elif score >= 75 and score <90:
+            text_score_label.text =  "Good Job"
+        elif score >= 30 and score <75:
+            text_score_label.text =  "Ok Performance"
+        else:
+            text_score_label.text =  "You can do better"
         num_score_label = Label(
+            color='5D3B23',
             text= str(score)+"%",
             font_size=80,
-            color=(1,1,1,1)
         )
         progress_bar = ProgressBar(
-            # color= (0.459, 0.722, 0.31, 1) ,
-            # back_color= (0.459, 0.722, 0.31, 1) ,
+            # color= 'B27B3E' ,
+            # back_color= 'B27B3E' ,
             max=100,
             value= score
         )
@@ -104,7 +114,7 @@ class Results(GridLayout):
             text="Home",
             font_size=40,
             border=(2, 2, 2, 2),
-            background_color=(0.459, 0.722, 0.31, 1),
+            background_color='B27B3E',
             background_normal='',
         )
         self.add_widget(text_score_label)
@@ -137,7 +147,7 @@ class DrillList(GridLayout):
         mycol = mydb["Exercices"]
         mylist = list(mycol.find())
         for i in mylist:
-            self.ids.carousel.add_widget(Button(text = i["question_text"]+"\n"+str(i["_id"]), font_size = 20, background_color = (0.459, 0.722, 0.31, 1), background_normal='', on_press = self.update))
+            self.ids.carousel.add_widget(Button(text = i["question_text"]+"\n"+str(i["_id"]), font_size = 20, background_color = 'B27B3E', background_normal='', on_press = self.update))
     def home(self):
         global button_sound
         button_sound.play()
@@ -457,20 +467,20 @@ class Exercice(GridLayout):
 
         #Multiple Choice
         if current_object["exercice_type"] == "multiple_choice":
-            self.add_widget(Label(text = current_object["question_text"], color = (1,1,1,1), font_size = 20))
+            self.add_widget(Label(text = current_object["question_text"], color = '5D3B23', font_size = 20))
             Options = GridLayout(rows = current_object["options"], cols = 1, spacing=(10,10),padding=(10,10))
             self.add_widget(Options)
             for i in current_object["all_options"]:
-                # Options.add_widget(Label(text=str(i), color = (1,1,1,1), font_size = 20))
+                # Options.add_widget(Label(text=str(i), color = '5D3B23', font_size = 20))
                 # Options.add_widget(CheckBox(group="v", active = False, x = str(i), on_press = self.get_answer))
-                Options.add_widget(ToggleButton(group="v", state = "normal", text = str(i), background_color=(0.459, 0.722, 0.31, 1),background_normal ='', on_press = self.get_answer, font_size = 20))
-            Explanation = Label(text = "", color = (1,1,1,1), font_size = 20)
+                Options.add_widget(ToggleButton(group="v", state = "normal", text = str(i), background_color='B27B3E',background_normal ='', on_press = self.get_answer, font_size = 20))
+            Explanation = Label(text = "", color = '5D3B23', font_size = 20)
             exp_text = current_object["explanation"]
             self.add_widget(Explanation)
             Buttons = GridLayout(cols = 2, spacing=(10,10),padding=(10,10))
             self.add_widget(Buttons)
-            Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), halign="center", background_color=(0.459, 0.722, 0.31, 1), background_normal ='', on_press = self.reveal_answer, disabled = True)
-            Next = Button(text="Next",font_size = 20, border= (2,2,2,2), halign="center", background_color=(0.459, 0.722, 0.31, 1), background_normal ='', disabled = True, on_press = self.next_task)
+            Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), halign="center", background_color='B27B3E', background_normal ='', on_press = self.reveal_answer, disabled = True)
+            Next = Button(text="Next",font_size = 20, border= (2,2,2,2), halign="center", background_color='B27B3E', background_normal ='', disabled = True, on_press = self.next_task)
             Buttons.add_widget(Submit)
             Buttons.add_widget(Next)
             if current_answer != "":
@@ -479,39 +489,39 @@ class Exercice(GridLayout):
         
         #True_False
         elif current_object["exercice_type"] == "true_false":
-            self.add_widget(Label(text = current_object["question_text"], color = (1,1,1,1), font_size = 20))
+            self.add_widget(Label(text = current_object["question_text"], color = '5D3B23', font_size = 20))
             Options = GridLayout(rows = current_object["options"], cols = 1, spacing=(10,10),padding=(10,10))
             self.add_widget(Options)
-            Options.add_widget(ToggleButton(group="v", state = "normal", text = "False", background_color=(0.459, 0.722, 0.31, 1),background_normal ='', on_press = self.get_answer, font_size = 20))
-            Explanation = Label(text = "", color = (1,1,1,1), font_size = 20)
+            Options.add_widget(ToggleButton(group="v", state = "normal", text = "False", background_color='B27B3E',background_normal ='', on_press = self.get_answer, font_size = 20))
+            Explanation = Label(text = "", color = '5D3B23', font_size = 20)
             exp_text = current_object["explanation"]
             self.add_widget(Explanation)
             Buttons = GridLayout(cols = 2, spacing=(10,10),padding=(10,10))
             self.add_widget(Buttons)
-            Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), halign="center", background_color=(0.459, 0.722, 0.31, 1), background_normal ='', on_press = self.reveal_answer, disabled = False)
-            Next = Button(text="Next",font_size = 20, border= (2,2,2,2), halign="center", background_color=(0.459, 0.722, 0.31, 1), background_normal ='', disabled = True, on_press = self.next_task)
+            Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), halign="center", background_color='B27B3E', background_normal ='', on_press = self.reveal_answer, disabled = False)
+            Next = Button(text="Next",font_size = 20, border= (2,2,2,2), halign="center", background_color='B27B3E', background_normal ='', disabled = True, on_press = self.next_task)
             Buttons.add_widget(Submit)
             Buttons.add_widget(Next)
             if current_answer != "":
                 Next.disabled = False
                 Submit.disabled = False
         
-        #Free Response
-        elif current_object["exercice_type"] == "free":
+        #Free Response & Ordering Words & Connecting Words
+        elif current_object["exercice_type"] == "free" or current_object["exercice_type"] == "connecting" or current_object["exercice_type"] == "ordering":
             global answer_field
-            self.add_widget(Label(text = current_object["question_text"], color = (1,1,1,1), font_size = 20))
+            self.add_widget(Label(text = current_object["question_text"], color = '5D3B23', font_size = 20))
             Options = GridLayout(rows = current_object["options"], cols = 1, spacing=(10,10),padding=(10,10))
             self.add_widget(Options)
-            answer_field = TextInput(text = "", hint_text = "Place response here...", hint_text_color = (1,1,1,1), multiline = False, font_size = 20, color = (1,1,1,1), foreground_color = (1,1,1,1), background_color = (0.482, 0.82, 0.38, 1))
+            answer_field = TextInput(text = "", hint_text = "Place response here...", hint_text_color = 'FFFFFF', multiline = False, font_size = 20, color = 'FFFFFF', foreground_color = 'FFFFFF', background_color = 'B27B3E')
             answer_field.bind(on_text_validate=self.get_answer)
             Options.add_widget(answer_field)
-            Explanation = Label(text = "", color = (1,1,1,1), font_size = 20)
+            Explanation = Label(text = "", color = '5D3B23', font_size = 20)
             exp_text = current_object["explanation"]
             self.add_widget(Explanation)
             Buttons = GridLayout(cols = 2, spacing=(10,10),padding=(10,10))
             self.add_widget(Buttons)
-            Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), halign="center", background_color=(0.459, 0.722, 0.31, 1), background_normal ='', on_press = self.reveal_answer, disabled = False)
-            Next = Button(text="Next",font_size = 20, border= (2,2,2,2), halign="center", background_color=(0.459, 0.722, 0.31, 1), background_normal ='', disabled = True, on_press = self.next_task)
+            Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), halign="center", background_color='B27B3E', background_normal ='', on_press = self.reveal_answer, disabled = False)
+            Next = Button(text="Next",font_size = 20, border= (2,2,2,2), halign="center", background_color='B27B3E', background_normal ='', disabled = True, on_press = self.next_task)
             Buttons.add_widget(Submit)
             Buttons.add_widget(Next)
             if current_answer != "":
@@ -530,7 +540,7 @@ class Exercice(GridLayout):
         global Submit
         global Next
         global right_answers
-        if current_object["exercice_type"] == "free":
+        if current_object["exercice_type"] == "free" or current_object["exercice_type"] == "connecting" or current_object["exercice_type"] == "ordering":
             current_answer = answer_field.text
         Next.disabled = False
         for child in Options.children:
@@ -595,6 +605,7 @@ class Exercice(GridLayout):
 
 class MainApp(App):
     def build(self):
+        self.title = "Astaxulator"
         self.screen_manager = ScreenManager()
 
         self.connect_page = Home()

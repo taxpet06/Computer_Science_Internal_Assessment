@@ -11,12 +11,12 @@
             id:welcome
             text : "Welcome"
             font_size : 40
-            color : 1,1,1,1
+            color : '5D3B23'
         Label:
             id:exercice
             text : "Quizzes By Exercise"
             font_size : 40
-            color : 1,1,1,1
+            color : '5D3B23'
         GridLayout:
             spacing : 10,10
             padding : 10,10
@@ -28,7 +28,7 @@
                 font_size : 18
                 halign : 'center'
                 border:2,2,2,2
-                background_color: 0.459, 0.722, 0.31, 1  
+                background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''
                 on_press : root.begin("multiple_choice")
@@ -38,7 +38,7 @@
                 font_size : 18
                 halign : 'center'
                 border:2,2,2,2
-                background_color: 0.459, 0.722, 0.31, 1  
+                background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''
                 on_press : root.begin("free")
@@ -48,7 +48,7 @@
                 font_size : 18
                 halign : 'center'
                 border:2,2,2,2
-                background_color: 0.459, 0.722, 0.31, 1  
+                background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''
                 on_press : root.begin("connecting")
@@ -58,7 +58,7 @@
                 font_size : 18
                 halign : 'center'
                 border:2,2,2,2
-                background_color: 0.459, 0.722, 0.31, 1  
+                background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''
                 on_press : root.begin("ordering")
@@ -68,7 +68,7 @@
                 font_size : 18
                 halign : 'center'
                 border:2,2,2,2
-                background_color: 0.459, 0.722, 0.31, 1  
+                background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''
                 on_press : root.begin("true_false")
@@ -76,7 +76,7 @@
             id:content
             text : "Quizzes By Content"
             font_size : 40
-            color : 1,1,1,1
+            color : '5D3B23'
         GridLayout:
             spacing : 10,10
             padding : 10,10
@@ -87,7 +87,7 @@
                 font_size : 20
                 halign : 'center'
                 border:2,2,2,2
-                background_color: 0.459, 0.722, 0.31, 1  
+                background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''
                 on_press : root.begin("grammar")
@@ -97,7 +97,7 @@
                 font_size : 20
                 halign : 'center'
                 border:2,2,2,2
-                background_color: 0.459, 0.722, 0.31, 1  
+                background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''
                 on_press : root.begin("vocabulary")
@@ -107,7 +107,7 @@
                 font_size : 20
                 halign : 'center'
                 border:2,2,2,2
-                background_color: 0.459, 0.722, 0.31, 1  
+                background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''
                 on_press : root.begin("syntax")
@@ -115,7 +115,7 @@
             id:content
             text : "Random Quiz"
             font_size : 40
-            color : 1,1,1,1
+            color : '5D3B23'
         GridLayout:
             spacing : 10,10
             padding : 10,10
@@ -126,7 +126,7 @@
                 font_size : 20
                 halign : 'center'
                 border:2,2,2,2
-                background_color: 0.459, 0.722, 0.31, 1  
+                background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''
                 on_press : root.begin("random")
@@ -135,7 +135,7 @@
             font_size : 40
             halign : 'center'
             border:2,2,2,2
-            background_color: 0.459, 0.722, 0.31, 1  
+            background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
             background_normal: ''
             ##background_down: ''  
             on_press : root.login()
@@ -147,12 +147,12 @@
         id:please
         text: "Please Enter the\nTeacher Passcode\nand Hit Enter"
         font_size : 40
-        color : 1,1,1,1
+        color : '5D3B23'
     Label:
         id:credential
         text: ""
         font_size : 40
-        color : 1,1,1,1
+        color : '5D3B23'
     TextInput:
         id:input
         text: ""
@@ -160,9 +160,9 @@
         hint_text_color: 1,1,1,1
         password: True
         font_size : 20
-        color : 1,1,1,1
+        color : '5D3B23'
         foreground_color : 1,1,1,1
-        background_color : 0.482, 0.82, 0.38, 1
+        background_color : 'B27B3E'
         multiline : False
         on_text_validate : root.dashboard()
     Button:
@@ -170,7 +170,7 @@
         font_size : 40
         halign : 'center'
         border:2,2,2,2
-        background_color: 0.459, 0.722, 0.31, 1  
+        background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
         background_normal: ''
         #background_down: ''  
         on_press : root.dashboard()
@@ -179,7 +179,7 @@
         font_size : 40
         halign : 'center'
         border:2,2,2,2
-        background_color: 0.459, 0.722, 0.31, 1  
+        background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
         background_normal: ''
         #background_down: ''  
         on_press : root.home()
@@ -196,13 +196,13 @@
             id:drills
             text: "Here are all the Drills"
             font_size : 20
-            color : 1,1,1,1
+            color : '5D3B23'
         Button:
             text:"Add Drill"
             font_size : 20
             halign : 'center'
             border:2,2,2,2
-            background_color: 0.459, 0.722, 0.31, 1  
+            background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
             background_normal: ''
             #background_down: ''  
             on_press : root.add()
@@ -217,7 +217,7 @@
                 Label:
                     text: 'Press Below to\nShow Scrollable Drills'
                     font_size: 20
-                    color: 1,1,1,1
+                    color: '5D3B23'
                 CheckBox:
                     group : 'v'
                     id: g
@@ -228,7 +228,7 @@
         font_size : 20
         halign : 'center'
         border:2,2,2,2
-        background_color: 0.459, 0.722, 0.31, 1  
+        background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
         background_normal: ''
         #background_down: ''  
         on_press : root.home()
@@ -240,13 +240,13 @@
         id:dashboard
         text: "Welcome to the\nTeacher Dashboard"
         font_size : 40
-        color : 1,1,1,1
+        color : '5D3B23'
     Button:
         text:"Add Drill"
         font_size : 40
         halign : 'center'
         border:2,2,2,2
-        background_color: 0.459, 0.722, 0.31, 1  
+        background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
         background_normal: ''
         #background_down: ''  
         on_press : root.add()
@@ -255,7 +255,7 @@
         font_size : 40
         halign : 'center'
         border:2,2,2,2
-        background_color: 0.459, 0.722, 0.31, 1  
+        background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
         background_normal: ''
         #background_down: ''  
         on_press : root.drills()
@@ -264,7 +264,7 @@
         font_size : 40
         halign : 'center'
         border:2,2,2,2
-        background_color: 0.459, 0.722, 0.31, 1  
+        background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
         background_normal: ''
         #background_down: ''  
         on_press : root.home()
@@ -276,7 +276,7 @@
     Label:
         text: 'Press Below to Reveal Score'
         font_size: 20
-        color: 1,1,1,1
+        color: '5D3B23'
     CheckBox:
         group : 'v'
         on_active : root.change_stats()
@@ -292,14 +292,14 @@
     Label:
         text: 'Press Below to Start'
         font_size: 20
-        color: 1,1,1,1
+        color: '5D3B23'
     CheckBox:
         group : 'v'
         on_active : root.build()
     Label:
         text: ''
         font_size: 20
-        color: 1,1,1,1
+        color: '5D3B23'
 
 <AddDrill>:
     rows : 10
@@ -310,28 +310,28 @@
         Label:
             text: 'Tags'
             font_size: 20
-            color: 1,1,1,1
+            color: '5D3B23'
         GridLayout:
             rows:3
             cols:2
             Label:
                 text: 'Grammar'
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             CheckBox:
                 id: grammar
                 on_press : root.addremove_tag("grammar", self.active)
             Label:
                 text: 'Vocabulary'
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             CheckBox:
                 id: grammar
                 on_press : root.addremove_tag("vocabulary", self.active)
             Label:
                 text: 'Syntax'
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             CheckBox:
                 id: grammar
                 on_press : root.addremove_tag("syntax", self.active)
@@ -340,14 +340,14 @@
         Label:
             text: 'Question Type'
             font_size: 20
-            color: 1,1,1,1
+            color: '5D3B23'
         GridLayout:
             rows:5
             cols:2
             Label:
                 text: 'Multiple Choice'
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             CheckBox:
                 group: "v"
                 id: multiple_choice
@@ -363,7 +363,7 @@
             Label:
                 text: 'Free Response'
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             CheckBox:
                 group: "v"
                 id: free
@@ -371,7 +371,7 @@
             Label:
                 text: 'Conncecting'
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             CheckBox:
                 group: "v"
                 id: connecting
@@ -379,7 +379,7 @@
             Label:
                 text: 'Ordering'
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             CheckBox:
                 group: "v"
                 id: ordering
@@ -389,9 +389,8 @@
         hint_text : "Enter question here"
         hint_text_color: 1,1,1,1
         font_size : 20
-        color : 1,1,1,1
         foreground_color : 1,1,1,1
-        background_color : 0.482, 0.82, 0.38, 1
+        background_color : 'B27B3E'
         multiline : False
     GridLayout:
         rows: 2
@@ -399,7 +398,7 @@
             id: options
             text: 'Options '
             font_size: 20
-            color: 1,1,1,1
+            color: '5D3B23'
         Slider:
             id: option_slider
             min: 1
@@ -415,12 +414,12 @@
                 id: all_options_text
                 text: 'All Options: '
                 font_size: 20
-                color: 1,1,1,1
+                color:'5D3B23'
             Label:
                 id: all_options
                 text: ''
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
         GridLayout:
             cols:3
             TextInput:
@@ -428,16 +427,15 @@
                 hint_text : "Enter 1 option"
                 hint_text_color: 1,1,1,1
                 font_size : 20
-                color : 1,1,1,1
                 foreground_color : 1,1,1,1
-                background_color : 0.482, 0.82, 0.38, 1
+                background_color : 'B27B3E'
                 multiline : False
             Button:
                 text: "Add"
                 font_size : 20
                 halign : 'center'
                 border:2,2,2,2
-                background_color: 0.459, 0.722, 0.31, 1  
+                background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''  
                 on_press : root.add_to_alloptions()
@@ -446,7 +444,7 @@
                 font_size : 20
                 halign : 'center'
                 border:2,2,2,2
-                background_color: 0.459, 0.722, 0.31, 1  
+                background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''  
                 on_press : root.delete_from_alloptions()
@@ -458,12 +456,12 @@
                 id: all_answers_text
                 text: 'Answers: '
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             Label:
                 id: all_answers
                 text: ''
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
         GridLayout:
             cols:3
             TextInput:
@@ -471,16 +469,15 @@
                 hint_text : "Enter 1 answer"
                 hint_text_color: 1,1,1,1
                 font_size : 20
-                color : 1,1,1,1
                 foreground_color : 1,1,1,1
-                background_color : 0.482, 0.82, 0.38, 1
+                background_color : 'B27B3E'
                 multiline : False
             Button:
                 text: "Add"
                 font_size : 20
                 halign : 'center'
                 border:2,2,2,2
-                background_color: 0.459, 0.722, 0.31, 1  
+                background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''  
                 on_press : root.add_to_allanswers()
@@ -489,7 +486,7 @@
                 font_size : 20
                 halign : 'center'
                 border:2,2,2,2
-                background_color: 0.459, 0.722, 0.31, 1  
+                background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''  
                 on_press : root.delete_from_allanswers()
@@ -498,16 +495,15 @@
         hint_text : "Enter explanation here"
         hint_text_color: 1,1,1,1
         font_size : 20
-        color : 1,1,1,1
         foreground_color : 1,1,1,1
-        background_color : 0.482, 0.82, 0.38, 1
+        background_color : 'B27B3E'
         multiline : False
     Button:
         text: "Add to \nQuestion Database"
         font_size : 20
         halign : 'center'
         border:2,2,2,2
-        background_color: 0.459, 0.722, 0.31, 1  
+        background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
         background_normal: ''
         #background_down: ''  
         on_press : root.add_to_db()
@@ -516,7 +512,7 @@
         font_size : 20
         halign : 'center'
         border:2,2,2,2
-        background_color: 0.459, 0.722, 0.31, 1  
+        background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
         background_normal: ''
         #background_down: ''  
         on_press : root.home()
@@ -530,14 +526,14 @@
         Label:
             text: 'Tags'
             font_size: 20
-            color: 1,1,1,1
+            color: '5D3B23'
         GridLayout:
             rows:3
             cols:2
             Label:
                 text: 'Grammar'
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             CheckBox:
                 id: grammar
                 on_press : root.addremove_tag("grammar", self.active)
@@ -545,7 +541,7 @@
             Label:
                 text: 'Vocabulary'
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             CheckBox:
                 id: vocabulary
                 on_press : root.addremove_tag("vocabulary", self.active)
@@ -553,7 +549,7 @@
             Label:
                 text: 'Syntax'
                 font_size: 20
-                color: 1,1,1,1
+                color:'5D3B23'
             CheckBox:
                 id: syntax
                 on_press : root.addremove_tag("syntax", self.active)
@@ -563,14 +559,14 @@
         Label:
             text: 'Question Type'
             font_size: 20
-            color: 1,1,1,1
+            color: '5D3B23'
         GridLayout:
             rows:5
             cols:2
             Label:
                 text: 'Multiple Choice'
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             CheckBox:
                 group: "v"
                 id: multiple_choice
@@ -578,7 +574,7 @@
             Label:
                 text: 'True or False'
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             CheckBox:
                 group: "v"
                 id: true_false
@@ -586,7 +582,7 @@
             Label:
                 text: 'Free Response'
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             CheckBox:
                 group: "v"
                 id: free
@@ -594,7 +590,7 @@
             Label:
                 text: 'Conncecting'
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             CheckBox:
                 group: "v"
                 id: connecting
@@ -602,7 +598,7 @@
             Label:
                 text: 'Ordering'
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             CheckBox:
                 group: "v"
                 id: ordering
@@ -612,9 +608,8 @@
         hint_text : "Enter question here"
         hint_text_color: 1,1,1,1
         font_size : 20
-        color : 1,1,1,1
         foreground_color : 1,1,1,1
-        background_color : 0.482, 0.82, 0.38, 1
+        background_color :'B27B3E'
         multiline : False
     GridLayout:
         rows: 2
@@ -622,7 +617,7 @@
             id: options
             text: 'Options '
             font_size: 20
-            color: 1,1,1,1
+            color:'5D3B23'
         Slider:
             id: option_slider
             min: 1
@@ -638,12 +633,12 @@
                 id: all_options_text
                 text: 'All Options: '
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             Label:
                 id: all_options
                 text: ''
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
         GridLayout:
             cols:3
             TextInput:
@@ -651,16 +646,15 @@
                 hint_text : "Enter 1 option"
                 hint_text_color: 1,1,1,1
                 font_size : 20
-                color : 1,1,1,1
                 foreground_color : 1,1,1,1
-                background_color : 0.482, 0.82, 0.38, 1
+                background_color : 'B27B3E'
                 multiline : False
             Button:
                 text: "Add"
                 font_size : 20
                 halign : 'center'
                 border:2,2,2,2
-                background_color: 0.459, 0.722, 0.31, 1  
+                background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''  
                 on_press : root.add_to_alloptions()
@@ -669,7 +663,7 @@
                 font_size : 20
                 halign : 'center'
                 border:2,2,2,2
-                background_color: 0.459, 0.722, 0.31, 1  
+                background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''  
                 on_press : root.delete_from_alloptions()
@@ -681,12 +675,12 @@
                 id: all_answers_text
                 text: 'Answers: '
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             Label:
                 id: all_answers
                 text: ''
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
         GridLayout:
             cols:3
             TextInput:
@@ -694,16 +688,15 @@
                 hint_text : "Enter 1 answer"
                 hint_text_color: 1,1,1,1
                 font_size : 20
-                color : 1,1,1,1
                 foreground_color : 1,1,1,1
-                background_color : 0.482, 0.82, 0.38, 1
+                background_color : 'B27B3E'
                 multiline : False
             Button:
                 text: "Add"
                 font_size : 20
                 halign : 'center'
                 border:2,2,2,2
-                background_color: 0.459, 0.722, 0.31, 1  
+                background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''  
                 on_press : root.add_to_allanswers()
@@ -712,7 +705,7 @@
                 font_size : 20
                 halign : 'center'
                 border:2,2,2,2
-                background_color: 0.459, 0.722, 0.31, 1  
+                background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
                 background_normal: ''
                 #background_down: ''  
                 on_press : root.delete_from_allanswers()
@@ -721,16 +714,15 @@
         hint_text : "Enter explanation here"
         hint_text_color: 1,1,1,1
         font_size : 20
-        color : 1,1,1,1
         foreground_color : 1,1,1,1
-        background_color : 0.482, 0.82, 0.38, 1
+        background_color : 'B27B3E'
         multiline : False
     Button:
         text: "Save"
         font_size : 20
         halign : 'center'
         border:2,2,2,2
-        background_color: 0.459, 0.722, 0.31, 1  
+        background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
         background_normal: ''
         #background_down: ''  
         on_press : root.add_to_db()
@@ -739,7 +731,7 @@
         font_size : 20
         halign : 'center'
         border:2,2,2,2
-        background_color: 0.459, 0.722, 0.31, 1  
+        background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
         background_normal: ''
         #background_down: ''  
         on_press : root.home()
