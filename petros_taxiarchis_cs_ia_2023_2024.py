@@ -1,5 +1,6 @@
 import kivy
 import pymongo
+from kivy.core.audio import SoundLoader
 from kivy.clock import Clock
 import time
 from kivy.app import App
@@ -28,6 +29,8 @@ global score
 global passcode 
 global once 
 global answer_field
+global button_sound
+button_sound = SoundLoader.load('Computer_Science_Internal_Assessment/bwuaaap.wav')
 once = 1
 passcode = "passcode"
 score = 0
@@ -60,14 +63,20 @@ exp_db = ""
 
 class Home(GridLayout):
     def login(self):
+        global button_sound
+        button_sound.play()
         latinapp.screen_manager.current = "TeacherLogin"
     def begin(self, kind):
         global quiz_kind
         quiz_kind = kind
         latinapp.screen_manager.current = "Exercice"
+        global button_sound
+        button_sound.play()
 
 class Results(GridLayout):
     def home(self):
+        global button_sound
+        button_sound.play()
         latinapp.screen_manager.current = "Home"
     def change_stats(self):
         global score
@@ -106,15 +115,22 @@ class Results(GridLayout):
         
 class TeacherDashboard(GridLayout):
     def add(self):
+        global button_sound
+        button_sound.play()
         latinapp.screen_manager.current = "AddDrill"
     def drills(self):
+        global button_sound
+        button_sound.play()
         latinapp.screen_manager.current = "DrillList"
-        #DrillList.build(DrillList(),"")
     def home(self):
+        global button_sound
+        button_sound.play()
         latinapp.screen_manager.current = "Home"
 
 class DrillList(GridLayout):
     def build(self, instance):
+        global button_sound
+        button_sound.play()
         self.ids.carousel.clear_widgets()
         myclient = pymongo.MongoClient("mongodb://localhost:27017/")
         mydb = myclient["IA"]
@@ -123,10 +139,16 @@ class DrillList(GridLayout):
         for i in mylist:
             self.ids.carousel.add_widget(Button(text = i["question_text"]+"\n"+str(i["_id"]), font_size = 20, background_color = (0.459, 0.722, 0.31, 1), background_normal='', on_press = self.update))
     def home(self):
+        global button_sound
+        button_sound.play()
         latinapp.screen_manager.current = "Home"
     def add(self):
+        global button_sound
+        button_sound.play()
         latinapp.screen_manager.current = "AddDrill"
     def update(self, instance):
+        global button_sound
+        button_sound.play()
         global current_drill_id
         current_drill_id = instance.text[instance.text.find('\n')+1:]
         global myupdate
@@ -167,6 +189,8 @@ class ModifyDrill(GridLayout):
         global all_optionsdb
         global correctdb
         global exp_db
+        global button_sound
+        button_sound.play()
         myclient = pymongo.MongoClient("mongodb://localhost:27017/")
         mydb = myclient["IA"]
         mycol = mydb["Exercices"]
@@ -177,34 +201,48 @@ class ModifyDrill(GridLayout):
         global current_drill
         mycol.delete_one(current_drill[0])
     def addremove_tag(self, value, active):
+        global button_sound
+        button_sound.play()
         global tags
         if active:
             tags.append(value)
         else:
             tags.remove(value)
     def delete_from_alloptions(self):
+        global button_sound
+        button_sound.play()
         global all_optionsdb
         if all_optionsdb:
             all_optionsdb.pop()
         self.ids.all_options.text = str(all_optionsdb)
         pass
     def add_to_alloptions(self):
+        global button_sound
+        button_sound.play()
         global all_optionsdb
         all_optionsdb.append(self.ids.one_option.text)
         self.ids.all_options.text = str(all_optionsdb)
     def delete_from_allanswers(self):
+        global button_sound
+        button_sound.play()
         global correctdb
         if correctdb:
             correctdb.pop()
         self.ids.all_answers.text = str(correctdb)
         pass
     def add_to_allanswers(self):
+        global button_sound
+        button_sound.play()
         global correctdb
         correctdb.append(self.ids.one_answer.text)
         self.ids.all_answers.text = str(correctdb)
     def home(self):
+        global button_sound
+        button_sound.play()
         latinapp.screen_manager.current = "Home"
     def change_type(self, value):
+        global button_sound
+        button_sound.play()
         global mytype
         mytype = value
         mytype = str(mytype)
@@ -223,6 +261,8 @@ class ModifyDrill(GridLayout):
 
 class AddDrill(GridLayout):
     def add_to_db(self):
+        global button_sound
+        button_sound.play()
         global tags
         global mytype
         global questiondb
@@ -236,34 +276,48 @@ class AddDrill(GridLayout):
         we_addin(mytype,tags,questiondb, optiondb, all_optionsdb, correctdb, exp_db)
         pass
     def addremove_tag(self, value, active):
+        global button_sound
+        button_sound.play()
         global tags
         if active:
             tags.append(value)
         else:
             tags.remove(value)
     def delete_from_alloptions(self):
+        global button_sound
+        button_sound.play()
         global all_optionsdb
         if all_optionsdb:
             all_optionsdb.pop()
         self.ids.all_options.text = str(all_optionsdb)
         pass
     def add_to_alloptions(self):
+        global button_sound
+        button_sound.play()
         global all_optionsdb
         all_optionsdb.append(self.ids.one_option.text)
         self.ids.all_options.text = str(all_optionsdb)
     def delete_from_allanswers(self):
+        global button_sound
+        button_sound.play()
         global correctdb
         if correctdb:
             correctdb.pop()
         self.ids.all_answers.text = str(correctdb)
         pass
     def add_to_allanswers(self):
+        global button_sound
+        button_sound.play()
         global correctdb
         correctdb.append(self.ids.one_answer.text)
         self.ids.all_answers.text = str(correctdb)
     def home(self):
+        global button_sound
+        button_sound.play()
         latinapp.screen_manager.current = "Home"
     def change_type(self, value):
+        global button_sound
+        button_sound.play()
         global mytype
         mytype = value
         mytype = str(mytype)
@@ -279,8 +333,12 @@ class AddDrill(GridLayout):
 
 class TeacherLogin(GridLayout):
     def home(self):
+        global button_sound
+        button_sound.play()
         latinapp.screen_manager.current = "Home"
     def dashboard(self):
+        global button_sound
+        button_sound.play()
         global passcode
         if self.ids.input.text == passcode:
             latinapp.screen_manager.current = "TeacherDashboard"
@@ -329,6 +387,8 @@ class Exercice(GridLayout):
     global right_answers
     right_answers = 0
     def build(self):
+        global button_sound
+        button_sound.play()
         global mycol
         global task_amount
         global current_object
@@ -458,7 +518,9 @@ class Exercice(GridLayout):
                 Next.disabled = False
                 Submit.disabled = False
 
-    def reveal_answer(self, instance): 
+    def reveal_answer(self, instance):
+        global button_sound
+        button_sound.play() 
         global Explanation
         global answer_field
         global exp_text
@@ -480,6 +542,8 @@ class Exercice(GridLayout):
         else:
             Explanation.text = "Not Quite. "+"\n"+exp_text
     def get_answer(self, instance):
+        global button_sound
+        button_sound.play()
         global current_object
         global Next
         global Submit
@@ -510,6 +574,8 @@ class Exercice(GridLayout):
             Submit.disabled = False
             current_answer = instance.text
     def next_task(self, instance):
+        global button_sound
+        button_sound.play()
         global mycol
         global task_amount
         global current_object
