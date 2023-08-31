@@ -122,7 +122,7 @@
             cols:1
             Button:
                 id:begin
-                text : "Begin"
+                text : "Begin Random"
                 font_size : 20
                 halign : 'center'
                 border:2,2,2,2
@@ -142,7 +142,7 @@
 <TeacherLogin>:
     spacing : 10,10
     padding : 10,10
-    rows:4
+    rows:5
     Label:
         id:please
         text: "Please Enter the\nTeacher Passcode\nand Hit Enter"
@@ -165,6 +165,15 @@
         background_color : 0.482, 0.82, 0.38, 1
         multiline : False
         on_text_validate : root.dashboard()
+    Button:
+        text:"Submit"
+        font_size : 40
+        halign : 'center'
+        border:2,2,2,2
+        background_color: 0.459, 0.722, 0.31, 1  
+        background_normal: ''
+        #background_down: ''  
+        on_press : root.dashboard()
     Button:
         text:"Home"
         font_size : 40

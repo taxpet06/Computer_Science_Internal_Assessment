@@ -27,6 +27,7 @@ Window.clearcolor = (0.1, 0.1, 0.2, 1)
 global score
 global passcode 
 global once 
+global answer_field
 once = 1
 passcode = "passcode"
 score = 0
@@ -63,7 +64,6 @@ class Home(GridLayout):
     def begin(self, kind):
         global quiz_kind
         quiz_kind = kind
-        print(quiz_kind)
         latinapp.screen_manager.current = "Exercice"
 
 class Results(GridLayout):
@@ -438,6 +438,7 @@ class Exercice(GridLayout):
         
         #Free Response
         elif current_object["exercice_type"] == "free":
+            global answer_field
             self.add_widget(Label(text = current_object["question_text"], color = (1,1,1,1), font_size = 20))
             Options = GridLayout(rows = current_object["options"], cols = 1, spacing=(10,10),padding=(10,10))
             self.add_widget(Options)
@@ -449,7 +450,7 @@ class Exercice(GridLayout):
             self.add_widget(Explanation)
             Buttons = GridLayout(cols = 2, spacing=(10,10),padding=(10,10))
             self.add_widget(Buttons)
-            Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), halign="center", background_color=(0.459, 0.722, 0.31, 1), background_normal ='', on_press = self.reveal_answer, disabled = True)
+            Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), halign="center", background_color=(0.459, 0.722, 0.31, 1), background_normal ='', on_press = self.reveal_answer, disabled = False)
             Next = Button(text="Next",font_size = 20, border= (2,2,2,2), halign="center", background_color=(0.459, 0.722, 0.31, 1), background_normal ='', disabled = True, on_press = self.next_task)
             Buttons.add_widget(Submit)
             Buttons.add_widget(Next)
@@ -459,6 +460,7 @@ class Exercice(GridLayout):
 
     def reveal_answer(self, instance): 
         global Explanation
+        global answer_field
         global exp_text
         global current_object
         global current_answer
@@ -466,6 +468,8 @@ class Exercice(GridLayout):
         global Submit
         global Next
         global right_answers
+        if current_object["exercice_type"] == "free":
+            current_answer = answer_field.text
         Next.disabled = False
         for child in Options.children:
             child.disabled = True
@@ -524,7 +528,6 @@ class Exercice(GridLayout):
 
 
 class MainApp(App):
-
     def build(self):
         self.screen_manager = ScreenManager()
 
