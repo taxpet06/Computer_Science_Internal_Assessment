@@ -220,6 +220,7 @@
                     color: '5D3B23'
                 CheckBox:
                     group : 'v'
+                    color : 'B27B3E'
                     id: g
                     on_active : root.build("delete_me")
 
@@ -278,6 +279,7 @@
         font_size: 20
         color: '5D3B23'
     CheckBox:
+        color : 'B27B3E'
         group : 'v'
         on_active : root.change_stats()
     Label:
@@ -295,6 +297,7 @@
         color: '5D3B23'
     CheckBox:
         group : 'v'
+        color : 'B27B3E'
         on_active : root.build()
     Label:
         text: ''
@@ -319,6 +322,7 @@
                 font_size: 20
                 color: '5D3B23'
             CheckBox:
+                color : 'B27B3E'
                 id: grammar
                 on_press : root.addremove_tag("grammar", self.active)
             Label:
@@ -327,6 +331,7 @@
                 color: '5D3B23'
             CheckBox:
                 id: grammar
+                color : 'B27B3E'
                 on_press : root.addremove_tag("vocabulary", self.active)
             Label:
                 text: 'Syntax'
@@ -334,6 +339,7 @@
                 color: '5D3B23'
             CheckBox:
                 id: grammar
+                color : 'B27B3E'
                 on_press : root.addremove_tag("syntax", self.active)
     GridLayout:
         cols:2
@@ -349,15 +355,17 @@
                 font_size: 20
                 color: '5D3B23'
             CheckBox:
-                group: "v"
+                group:"v"
+                color : 'B27B3E'
                 id: multiple_choice
                 on_press : root.change_type("multiple_choice")
             Label:
                 text: 'True or False'
                 font_size: 20
-                color: 1,1,1,1
+                color: '5D3B23'
             CheckBox:
-                group: "v"
+                group:"v"
+                color : 'B27B3E'
                 id: true_false
                 on_press : root.change_type("true_false")
             Label:
@@ -365,7 +373,8 @@
                 font_size: 20
                 color: '5D3B23'
             CheckBox:
-                group: "v"
+                group:"v"
+                color : 'B27B3E'
                 id: free
                 on_press : root.change_type("free")
             Label:
@@ -373,7 +382,8 @@
                 font_size: 20
                 color: '5D3B23'
             CheckBox:
-                group: "v"
+                group:"v"
+                color : 'B27B3E'
                 id: connecting
                 on_press : root.change_type("connecting")
             Label:
@@ -381,7 +391,8 @@
                 font_size: 20
                 color: '5D3B23'
             CheckBox:
-                group: "v"
+                group:"v"
+                color : 'B27B3E'
                 id: ordering
                 on_press : root.change_type("ordering")
     TextInput:
@@ -536,6 +547,7 @@
                 color: '5D3B23'
             CheckBox:
                 id: grammar
+                color : 'B27B3E'
                 on_press : root.addremove_tag("grammar", self.active)
                 active: False
             Label:
@@ -544,6 +556,7 @@
                 color: '5D3B23'
             CheckBox:
                 id: vocabulary
+                color : 'B27B3E'
                 on_press : root.addremove_tag("vocabulary", self.active)
                 active: False
             Label:
@@ -552,6 +565,7 @@
                 color:'5D3B23'
             CheckBox:
                 id: syntax
+                color : 'B27B3E'
                 on_press : root.addremove_tag("syntax", self.active)
                 active: False
     GridLayout:
@@ -568,7 +582,8 @@
                 font_size: 20
                 color: '5D3B23'
             CheckBox:
-                group: "v"
+                group:"v"
+                color : 'B27B3E'
                 id: multiple_choice
                 on_press : root.change_type("multiple_choice")
             Label:
@@ -576,7 +591,8 @@
                 font_size: 20
                 color: '5D3B23'
             CheckBox:
-                group: "v"
+                group:"v"
+                color : 'B27B3E'
                 id: true_false
                 on_press : root.change_type("true_false")
             Label:
@@ -584,7 +600,8 @@
                 font_size: 20
                 color: '5D3B23'
             CheckBox:
-                group: "v"
+                group:"v"
+                color : 'B27B3E'
                 id: free
                 on_press : root.change_type("free")
             Label:
@@ -592,7 +609,8 @@
                 font_size: 20
                 color: '5D3B23'
             CheckBox:
-                group: "v"
+                group:"v"
+                color : 'B27B3E'
                 id: connecting
                 on_press : root.change_type("connecting")
             Label:
@@ -600,7 +618,8 @@
                 font_size: 20
                 color: '5D3B23'
             CheckBox:
-                group: "v"
+                group:"v"
+                color : 'B27B3E'
                 id: ordering
                 on_press : root.change_type("ordering")
     TextInput:
