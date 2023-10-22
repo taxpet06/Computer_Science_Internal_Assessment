@@ -7,9 +7,12 @@ import pymongo
 #grammar
 #vocabulary
 #syntax
-def we_addin(type,tags,question,option,all_options,correct,explanation_text):
+def adding(type,tags,question,option,all_options,correct,explanation_text):
+    #Connect to the local MongoDB client
     myclient = pymongo.MongoClient("mongodb://localhost:27017/")
     mydb = myclient["IA"]
     mycol = mydb["Exercices"]
-    mydict = {"exercice_type": type, "exercice_tags":tags, "question_text": question, "options": option, "correct_answer": correct, "all_options": all_options, "explanation": explanation_text}
-    x = mycol.insert_one(mydict)
+    #create_wanted_entry
+    mydict = {"exercice_type": type, "exercice_tags":tags, "question_text": question, "options": option,
+     "correct_answer": correct, "all_options": all_options, "explanation": explanation_text}
+    x = mycol.insert_one(mydict) #add_entry_to_database

@@ -529,7 +529,7 @@
         on_press : root.home()
 
 <ModifyDrill>:
-    rows : 10
+    rows : 11
     spacing : 10,10
     padding : 10,10
     GridLayout:
@@ -736,6 +736,15 @@
         foreground_color : 1,1,1,1
         background_color : 'B27B3E'
         multiline : False
+    Button:
+        text: "Delete Exercice"
+        font_size : 20
+        halign : 'center'
+        border:2,2,2,2
+        background_color: 'B27B3E'#0.459, 0.722, 0.31, 1  
+        background_normal: ''
+        #background_down: ''  
+        on_press : root.delete_from_db()
     Button:
         text: "Save"
         font_size : 20

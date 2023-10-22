@@ -2,7 +2,6 @@ import kivy
 import pymongo
 from kivy.core.audio import SoundLoader
 from kivy.clock import Clock
-import time
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.gridlayout import GridLayout
@@ -17,7 +16,7 @@ from kivy.uix.progressbar import ProgressBar
 from kivy.uix.textinput import TextInput
 from kivy.uix.popup import Popup
 from kivy.uix.floatlayout import FloatLayout
-from data_base_testing import we_addin
+from data_base_testing import adding
 from bson.objectid import ObjectId
 from kivy.event import EventDispatcher
 import math
@@ -77,6 +76,8 @@ class Results(GridLayout):
     def home(self):
         global button_sound
         button_sound.play()
+        
+        App.get_running_app().restart()
         latinapp.screen_manager.current = "Home"
     def change_stats(self):
         global score
@@ -123,34 +124,39 @@ class Results(GridLayout):
         self.add_widget(home)
         home.on_press = self.home
         
-class TeacherDashboard(GridLayout):
-    def add(self):
+class TeacherDashboard(GridLayout): #Teacher_Dashboard_Screen
+    def add(self): #for_button_to_take_to_add_page
         global button_sound
         button_sound.play()
         latinapp.screen_manager.current = "AddDrill"
-    def drills(self):
+    def drills(self): #for_button_to_take_to_drill_list_page
         global button_sound
         button_sound.play()
         latinapp.screen_manager.current = "DrillList"
-    def home(self):
+    def home(self): #for_button_to_take_to_home_page
         global button_sound
         button_sound.play()
+        App.get_running_app().restart()
         latinapp.screen_manager.current = "Home"
 
 class DrillList(GridLayout):
     def build(self, instance):
         global button_sound
-        button_sound.play()
-        self.ids.carousel.clear_widgets()
-        myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+        button_sound.play() #play sound
+        self.ids.carousel.clear_widgets() #clear all widgets inside the "carousel" component
+        myclient = pymongo.MongoClient("mongodb://localhost:27017/") #connect to database
         mydb = myclient["IA"]
         mycol = mydb["Exercices"]
         mylist = list(mycol.find())
-        for i in mylist:
-            self.ids.carousel.add_widget(Button(text = i["question_text"]+"\n"+str(i["_id"]), font_size = 20, background_color = 'B27B3E', background_normal='', on_press = self.update))
+        for i in mylist: #build all exercices in the database
+            self.ids.carousel.add_widget(Button(text = i["question_text"]+"\n"+str(i["_id"]), 
+                                                font_size = 20, background_color = 'B27B3E',
+                                                  background_normal='', on_press = self.update))
     def home(self):
         global button_sound
         button_sound.play()
+        
+        App.get_running_app().restart()
         latinapp.screen_manager.current = "Home"
     def add(self):
         global button_sound
@@ -169,7 +175,6 @@ class DrillList(GridLayout):
 class ModifyDrill(GridLayout):
     global myupdate
     def update(self):
-        Builder.load_file("Main.kv")
         global current_drill_id
         global current_drill
         global myupdate
@@ -191,6 +196,9 @@ class ModifyDrill(GridLayout):
             # else: 
             #     pass
             # self.ids.question_text.text = current_drill[0]["question_text"]
+    def delete_from_db(self): #delete currently selected exercice from db
+        global current_drill
+        mycol.delete_one(current_drill[0])
     def add_to_db(self):
         global tags
         global mytype
@@ -207,7 +215,7 @@ class ModifyDrill(GridLayout):
         questiondb = self.ids.question_text.text
         exp_db = self.ids.explanation_text.text
         optiondb = self.ids.option_slider.value
-        we_addin(mytype,tags,questiondb, optiondb, all_optionsdb, correctdb, exp_db)
+        adding(mytype,tags,questiondb, optiondb, all_optionsdb, correctdb, exp_db)
         global current_drill
         mycol.delete_one(current_drill[0])
     def addremove_tag(self, value, active):
@@ -249,6 +257,8 @@ class ModifyDrill(GridLayout):
     def home(self):
         global button_sound
         button_sound.play()
+        
+        App.get_running_app().restart()
         latinapp.screen_manager.current = "Home"
     def change_type(self, value):
         global button_sound
@@ -269,10 +279,11 @@ class ModifyDrill(GridLayout):
     # ev.bind(on_test=update)
     # ev.do_something('pwease')
 
-class AddDrill(GridLayout):
+class AddDrill(GridLayout): #Adding new drill Screen
     def add_to_db(self):
         global button_sound
-        button_sound.play()
+        button_sound.play()#Play button popping sound through kivy
+        #Retrieve all necessary exercice values from widgets or globals
         global tags
         global mytype
         global questiondb
@@ -283,8 +294,8 @@ class AddDrill(GridLayout):
         questiondb = self.ids.question_text.text
         exp_db = self.ids.explanation_text.text
         optiondb = self.ids.option_slider.value
-        we_addin(mytype,tags,questiondb, optiondb, all_optionsdb, correctdb, exp_db)
-        pass
+        adding(mytype,tags,questiondb, optiondb, all_optionsdb, correctdb, exp_db) 
+        #Use imported script to insert new entry into the database
     def addremove_tag(self, value, active):
         global button_sound
         button_sound.play()
@@ -324,6 +335,8 @@ class AddDrill(GridLayout):
     def home(self):
         global button_sound
         button_sound.play()
+        
+        App.get_running_app().restart()
         latinapp.screen_manager.current = "Home"
     def change_type(self, value):
         global button_sound
@@ -345,6 +358,8 @@ class TeacherLogin(GridLayout):
     def home(self):
         global button_sound
         button_sound.play()
+        
+        App.get_running_app().restart()
         latinapp.screen_manager.current = "Home"
     def dashboard(self):
         global button_sound
@@ -376,21 +391,20 @@ class Exercice(GridLayout):
         random_index = random.randint(0, len(full_task_list)-1)
         random_document = full_task_list.pop(random_index)
         return random_document
-    def get_random_type_document(self,collection):
+    #Provide a randomized document from the database only containing entries of certain exercice type
+    def get_random_type_document(self,collection): 
         global full_task_list
         global random_index
         global quiz_kind
-        random_index = random.randint(0, len(full_task_list)-1)
-        random_document = full_task_list.pop(random_index)
-        return random_document
-    def get_random_document(self,collection):
+        random_index = random.randint(0, len(full_task_list)-1) # Generate a random index within the range of document count
+        random_document = full_task_list.pop(random_index) #Remove selected index from list so no duplicates
+        return random_document #Return the selected document picked at random
+    def get_random_document(self,collection): #Provide a randomized document from the full task list
         global full_task_list
         global random_index
-        # count = collection.count_documents({})  # Get the total number of documents in the collection
         random_index = random.randint(0, len(full_task_list)-1)  # Generate a random index within the range of document count
-        # random_document = collection.find().limit(1).skip(random_index)[0]
         random_document = full_task_list.pop(random_index)
-        return random_document
+        return random_document #Return the selected document picked at random
     global current_object
     global current_index
     current_index = 0
@@ -424,17 +438,20 @@ class Exercice(GridLayout):
         myclient = pymongo.MongoClient("mongodb://localhost:27017/")
         mydb = myclient["IA"]
         mycol = mydb["Exercices"]
-        full_task_list = list(mycol.find())
+        full_task_list = list(mycol.find()) #put all collection into list
         task_amount = len(full_task_list)
         if once == 1:
             if task_amount < 10:
-                if quiz_kind == "random":
-                    for i in range(1,len(full_task_list)+1):
+                if quiz_kind == "random": # If random quiz
+                    for i in range(1,len(full_task_list)+1): # Add as many exercices in task list as there are total tasks in the database
                         task_list.append(self.get_random_document(mycol))
                         actual_tasks = len(task_list)
+                #For a multiple choice quiz
                 if quiz_kind == "multiple_choice" or quiz_kind == "true_false" or quiz_kind == "free" or quiz_kind == "connecting" or quiz_kind == "ordering":
-                    full_task_list = list(mycol.find({"exercice_type":quiz_kind}))
-                    for i in range(1,len(full_task_list)+1):
+                    #Switch the full database entries list to one only containing the exercices tagged multiple_choice
+                    full_task_list = list(mycol.find({"exercice_type":quiz_kind})) 
+                    #Add as many exercices in task list as there are total tasks in the database
+                    for i in range(1,len(full_task_list)+1): 
                         task_list.append(self.get_random_type_document(mycol))
                         actual_tasks = len(task_list)
                 if quiz_kind == "grammar" or quiz_kind == "syntax" or quiz_kind == "vocabulary":
@@ -466,26 +483,32 @@ class Exercice(GridLayout):
         self.clear_widgets()
 
         #Multiple Choice
-        if current_object["exercice_type"] == "multiple_choice":
-            self.add_widget(Label(text = current_object["question_text"], color = '5D3B23', font_size = 20))
-            Options = GridLayout(rows = current_object["options"], cols = 1, spacing=(10,10),padding=(10,10))
-            self.add_widget(Options)
-            for i in current_object["all_options"]:
-                # Options.add_widget(Label(text=str(i), color = '5D3B23', font_size = 20))
-                # Options.add_widget(CheckBox(group="v", active = False, x = str(i), on_press = self.get_answer))
-                Options.add_widget(ToggleButton(group="v", state = "normal", text = str(i), background_color='B27B3E',background_normal ='', on_press = self.get_answer, font_size = 20))
+        if current_object["exercice_type"] == "multiple_choice":  
+            #if the exercice type that is currently selected is multiple choice
+            self.add_widget(Label(text = current_object["question_text"], color = '5D3B23', font_size = 20)) 
+            #add a label with the exercice's question text
+            Options = GridLayout(rows = current_object["options"], cols = 1, spacing=(10,10),padding=(10,10)) 
+            #set a grid of rows equal to the available options
+            self.add_widget(Options) #add it
+            for i in current_object["all_options"]:  
+                #add button on grid for each of the available multiple choice options
+                Options.add_widget(ToggleButton(group="v", state = "normal", text = str(i), background_color='B27B3E',
+                                                background_normal ='', on_press = self.get_answer, font_size = 20))
             Explanation = Label(text = "", color = '5D3B23', font_size = 20)
-            exp_text = current_object["explanation"]
-            self.add_widget(Explanation)
-            Buttons = GridLayout(cols = 2, spacing=(10,10),padding=(10,10))
-            self.add_widget(Buttons)
-            Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), halign="center", background_color='B27B3E', background_normal ='', on_press = self.reveal_answer, disabled = True)
-            Next = Button(text="Next",font_size = 20, border= (2,2,2,2), halign="center", background_color='B27B3E', background_normal ='', disabled = True, on_press = self.next_task)
-            Buttons.add_widget(Submit)
+            exp_text = current_object["explanation"] #get the current exercice's explanation text
+            self.add_widget(Explanation) #add widget
+            Buttons = GridLayout(cols = 2, spacing=(10,10),padding=(10,10)) #Set grid for buttons 
+            self.add_widget(Buttons) #Add grid
+            #Set Submit and Next Buttons
+            Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), halign="center",
+                             background_color='B27B3E', background_normal ='', on_press = self.reveal_answer, disabled = True)
+            Next = Button(text="Next",font_size = 20, border= (2,2,2,2), halign="center",
+                           background_color='B27B3E', background_normal ='', disabled = True, on_press = self.next_task)
+            Buttons.add_widget(Submit) #Add Submit and Next Buttons on the grid
             Buttons.add_widget(Next)
-            if current_answer != "":
+            if current_answer != "": #Control when the user can click the Next and Submit buttons
                 Next.disabled = False
-                Submit.disabled = False
+                Submit.disabled = False    
         
         #True_False
         elif current_object["exercice_type"] == "true_false":
@@ -546,11 +569,11 @@ class Exercice(GridLayout):
         for child in Options.children:
             child.disabled = True
         Submit.disabled = True
-        if current_answer in current_object["correct_answer"]:
-            Explanation.text = "Good Job. "+"\n"+exp_text
-            right_answers += 1
-        else:
-            Explanation.text = "Not Quite. "+"\n"+exp_text
+        if current_answer in current_object["correct_answer"]: #if correct answer after submit
+            Explanation.text = "Good Job. "+"\n"+exp_text #show explanation
+            right_answers += 1 #incriment right response
+        else: #else
+            Explanation.text = "Not Quite. "+"\n"+exp_text #show explanation without incrimenting
     def get_answer(self, instance):
         global button_sound
         button_sound.play()
@@ -648,6 +671,13 @@ class MainApp(App):
         screen.add_widget(self.connect_page)
         self.screen_manager.add_widget(screen)
         return (self.screen_manager)
+    
+    def restart(self):
+        self.root.clear_widgets()
+        self.stop()
+        self.build()
+        Builder.unload_file("main.kv")
+        return MainApp().run()
 
 if __name__ == "__main__":
     latinapp = MainApp()
