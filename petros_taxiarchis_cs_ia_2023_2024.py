@@ -1,5 +1,6 @@
 import kivy
 import pymongo
+from difflib import SequenceMatcher
 from kivy.core.audio import SoundLoader
 from kivy.clock import Clock
 from kivy.app import App
@@ -76,7 +77,6 @@ class Results(GridLayout):
     def home(self):
         global button_sound
         button_sound.play()
-        
         App.get_running_app().restart()
         latinapp.screen_manager.current = "Home"
     def change_stats(self):
@@ -550,7 +550,10 @@ class Exercice(GridLayout):
             if current_answer != "":
                 Next.disabled = False
                 Submit.disabled = False
-
+    
+    def similarity(self,first,second):
+        return SequenceMatcher(None, first, second).ratio()
+    
     def reveal_answer(self, instance):
         global button_sound
         button_sound.play() 
@@ -563,8 +566,14 @@ class Exercice(GridLayout):
         global Submit
         global Next
         global right_answers
-        if current_object["exercice_type"] == "free" or current_object["exercice_type"] == "connecting" or current_object["exercice_type"] == "ordering":
+        if current_object["exercice_type"] == "connecting" or current_object["exercice_type"] == "ordering":
             current_answer = answer_field.text
+        elif current_object["exercice_type"] == "free":
+            current_answer = answer_field.text
+            #make the slightly wrong current answer equal to the propper answer  
+            for i in current_object["correct_answer"]:
+                if self.similarity(current_answer,i) > 0.75:
+                    current_answer = current_object["correct_answer"][0]
         Next.disabled = False
         for child in Options.children:
             child.disabled = True
@@ -675,9 +684,11 @@ class MainApp(App):
     def restart(self):
         self.root.clear_widgets()
         self.stop()
-        self.build()
+        #self.build()
         Builder.unload_file("main.kv")
-        return MainApp().run()
+        #self.build()
+        return (MainApp().run())
+        
 
 if __name__ == "__main__":
     latinapp = MainApp()
