@@ -24,18 +24,18 @@ import math
 Window.size = (720*0.65, 1280*0.65)
 import random
 kivy.require('1.11.1')
-Window.clearcolor = 'FFD5A6'
+Window.clearcolor = 'FFD5A6' #Background
 global score
 global passcode 
 global once 
 global answer_field
 global button_sound
-button_sound = SoundLoader.load('Computer_Science_Internal_Assessment/bwuaaap.wav')
+button_sound = SoundLoader.load('Computer_Science_Internal_Assessment/bwuaaap.wav') #Button Soun
 once = 1
-passcode = "passcode"
+passcode = "passcode" #Teacher Password
 score = 0
 looper = True
-global quiz_kind #mc, fr, cw, ow, rw, grammar, vocabulary, syntax, #random
+global quiz_kind #mc, fr, cw, ow, rw, grammar, vocabulary, syntax, #random #<-- names for different quiz types
 quiz_kind = ""
 global task_list
 global actual_tasks
@@ -61,8 +61,8 @@ global exp_db
 exp_db = ""
 #
 
-class Home(GridLayout):
-    def login(self):
+class Home(GridLayout): #Home Screen
+    def login(self): #Login Button Function for Moving to Teacher Login Screen
         global button_sound
         button_sound.play()
         latinapp.screen_manager.current = "TeacherLogin"
@@ -74,12 +74,12 @@ class Home(GridLayout):
         button_sound.play()
 
 class Results(GridLayout):
-    def home(self):
+    def home(self): #Home Button Function for Moving to Home Screen
         global button_sound
         button_sound.play()
         App.get_running_app().restart()
         latinapp.screen_manager.current = "Home"
-    def change_stats(self):
+    def change_stats(self): #Function to take the Original Widgets and adjust them according to the user's score
         global score
         self.clear_widgets()
         self.rows = 4
@@ -90,7 +90,7 @@ class Results(GridLayout):
             font_size=40,
             color='5D3B23'
         )
-        if score >= 90:
+        if score >= 90: #Different Text depending on the performance
             text_score_label.text =  "Excellent"
             sound = SoundLoader.load('Computer_Science_Internal_Assessment/c.wav')
             sound.play()
@@ -100,6 +100,7 @@ class Results(GridLayout):
             text_score_label.text =  "Ok Performance"
         else:
             text_score_label.text =  "You can do better"
+        #Adding all necessary widgets to build the screen's UI
         num_score_label = Label(
             color='5D3B23',
             text= str(score)+"%",
@@ -133,13 +134,13 @@ class TeacherDashboard(GridLayout): #Teacher_Dashboard_Screen
         global button_sound
         button_sound.play()
         latinapp.screen_manager.current = "DrillList"
-    def home(self): #for_button_to_take_to_home_page
+    def home(self): #Home Button Function for Moving to Home Screen #for_button_to_take_to_home_page
         global button_sound
         button_sound.play()
         App.get_running_app().restart()
         latinapp.screen_manager.current = "Home"
 
-class DrillList(GridLayout):
+class DrillList(GridLayout): #Screen for the Drill List where the teacher can enter an exercice and change it
     def build(self, instance):
         global button_sound
         button_sound.play() #play sound
@@ -152,17 +153,17 @@ class DrillList(GridLayout):
             self.ids.carousel.add_widget(Button(text = i["question_text"]+"\n"+str(i["_id"]), 
                                                 font_size = 20, background_color = 'B27B3E',
                                                   background_normal='', on_press = self.update))
-    def home(self):
+    def home(self): #Home Button Function for Moving to Home Screen
         global button_sound
         button_sound.play()
         
         App.get_running_app().restart()
         latinapp.screen_manager.current = "Home"
-    def add(self):
+    def add(self): #Function for add button to move to AddDrill Screen
         global button_sound
         button_sound.play()
         latinapp.screen_manager.current = "AddDrill"
-    def update(self, instance):
+    def update(self, instance): #Function for when an exercice is clicked to move to Modify it
         global button_sound
         button_sound.play()
         global current_drill_id
@@ -172,14 +173,14 @@ class DrillList(GridLayout):
         latinapp.screen_manager.current = "ModifyDrill"
         ModifyDrill.update(ModifyDrill())
 
-class ModifyDrill(GridLayout):
+class ModifyDrill(GridLayout): #Screen for Modifying a Drill
     global myupdate
     def update(self):
         global current_drill_id
         global current_drill
         global myupdate
         global tags
-        if myupdate:
+        if myupdate: #If there has not been an update
             myclient = pymongo.MongoClient("mongodb://localhost:27017/")
             mydb = myclient["IA"]
             mycol = mydb["Exercices"]
@@ -199,7 +200,7 @@ class ModifyDrill(GridLayout):
     def delete_from_db(self): #delete currently selected exercice from db
         global current_drill
         mycol.delete_one(current_drill[0])
-    def add_to_db(self):
+    def add_to_db(self): #add the new exercice to db
         global tags
         global mytype
         global questiondb
@@ -218,7 +219,7 @@ class ModifyDrill(GridLayout):
         adding(mytype,tags,questiondb, optiondb, all_optionsdb, correctdb, exp_db)
         global current_drill
         mycol.delete_one(current_drill[0])
-    def addremove_tag(self, value, active):
+    def addremove_tag(self, value, active): #Function to handle adding and removing exercice tags
         global button_sound
         button_sound.play()
         global tags
@@ -226,7 +227,7 @@ class ModifyDrill(GridLayout):
             tags.append(value)
         else:
             tags.remove(value)
-    def delete_from_alloptions(self):
+    def delete_from_alloptions(self): #Function for deleting exercice options
         global button_sound
         button_sound.play()
         global all_optionsdb
@@ -234,13 +235,13 @@ class ModifyDrill(GridLayout):
             all_optionsdb.pop()
         self.ids.all_options.text = str(all_optionsdb)
         pass
-    def add_to_alloptions(self):
+    def add_to_alloptions(self): #Function for adding exercice options
         global button_sound
         button_sound.play()
         global all_optionsdb
         all_optionsdb.append(self.ids.one_option.text)
         self.ids.all_options.text = str(all_optionsdb)
-    def delete_from_allanswers(self):
+    def delete_from_allanswers(self): #Function for deleting correct answers
         global button_sound
         button_sound.play()
         global correctdb
@@ -248,30 +249,30 @@ class ModifyDrill(GridLayout):
             correctdb.pop()
         self.ids.all_answers.text = str(correctdb)
         pass
-    def add_to_allanswers(self):
+    def add_to_allanswers(self): #Function for adding correct answers
         global button_sound
         button_sound.play()
         global correctdb
         correctdb.append(self.ids.one_answer.text)
         self.ids.all_answers.text = str(correctdb)
-    def home(self):
+    def home(self): #Home Button Function for Moving to Home Screen
         global button_sound
         button_sound.play()
         
         App.get_running_app().restart()
         latinapp.screen_manager.current = "Home"
-    def change_type(self, value):
+    def change_type(self, value): #Function for handling changing the exercice type
         global button_sound
         button_sound.play()
         global mytype
         mytype = value
         mytype = str(mytype)
-        if mytype == "true_false" or mytype == "free":
-            self.ids.option_slider.value = 1
+        if mytype == "true_false" or mytype == "free": #If true or false or free response question
+            self.ids.option_slider.value = 1 #Remove the options slider
             self.ids.option_slider.disabled = True
         else:
             self.ids.option_slider.disabled = False
-    def slider(self,value):
+    def slider(self,value): #Function for handling amount of available options
         global optiondb
         optiondb = value
         self.ids.options.text = "Options " + str(value)
@@ -280,7 +281,7 @@ class ModifyDrill(GridLayout):
     # ev.do_something('pwease')
 
 class AddDrill(GridLayout): #Adding new drill Screen
-    def add_to_db(self):
+    def add_to_db(self): #add the new exercice to db
         global button_sound
         button_sound.play()#Play button popping sound through kivy
         #Retrieve all necessary exercice values from widgets or globals
@@ -296,7 +297,7 @@ class AddDrill(GridLayout): #Adding new drill Screen
         optiondb = self.ids.option_slider.value
         adding(mytype,tags,questiondb, optiondb, all_optionsdb, correctdb, exp_db) 
         #Use imported script to insert new entry into the database
-    def addremove_tag(self, value, active):
+    def addremove_tag(self, value, active):#Function to handle adding and removing exercice tags
         global button_sound
         button_sound.play()
         global tags
@@ -304,7 +305,7 @@ class AddDrill(GridLayout): #Adding new drill Screen
             tags.append(value)
         else:
             tags.remove(value)
-    def delete_from_alloptions(self):
+    def delete_from_alloptions(self):#Function for deleting exercice options
         global button_sound
         button_sound.play()
         global all_optionsdb
@@ -312,13 +313,13 @@ class AddDrill(GridLayout): #Adding new drill Screen
             all_optionsdb.pop()
         self.ids.all_options.text = str(all_optionsdb)
         pass
-    def add_to_alloptions(self):
+    def add_to_alloptions(self): #Function for adding exercice options
         global button_sound
         button_sound.play()
         global all_optionsdb
         all_optionsdb.append(self.ids.one_option.text)
         self.ids.all_options.text = str(all_optionsdb)
-    def delete_from_allanswers(self):
+    def delete_from_allanswers(self): #Function for deleting correct answers
         global button_sound
         button_sound.play()
         global correctdb
@@ -326,42 +327,42 @@ class AddDrill(GridLayout): #Adding new drill Screen
             correctdb.pop()
         self.ids.all_answers.text = str(correctdb)
         pass
-    def add_to_allanswers(self):
+    def add_to_allanswers(self): #Function for adding correct answers
         global button_sound
         button_sound.play()
         global correctdb
         correctdb.append(self.ids.one_answer.text)
         self.ids.all_answers.text = str(correctdb)
-    def home(self):
+    def home(self): #Home Button Function for Moving to Home Screen
         global button_sound
         button_sound.play()
         
         App.get_running_app().restart()
         latinapp.screen_manager.current = "Home"
-    def change_type(self, value):
+    def change_type(self, value): #Function for handling changing the exercice type
         global button_sound
         button_sound.play()
         global mytype
         mytype = value
         mytype = str(mytype)
-        if mytype == "true_false" or mytype == "free":
-            self.ids.option_slider.value = 1
+        if mytype == "true_false" or mytype == "free": #If true or false or free response question
+            self.ids.option_slider.value = 1 #Remove the options slider
             self.ids.option_slider.disabled = True
         else:
             self.ids.option_slider.disabled = False
-    def slider(self,value):
+    def slider(self,value): #Function for handling amount of available options
         global optiondb
         optiondb = value
         self.ids.options.text = "Options " + str(value)
 
-class TeacherLogin(GridLayout):
-    def home(self):
+class TeacherLogin(GridLayout): # Screen for Teacher Login area
+    def home(self): #Home Button Function for Moving to Home Screen
         global button_sound
         button_sound.play()
         
         App.get_running_app().restart()
         latinapp.screen_manager.current = "Home"
-    def dashboard(self):
+    def dashboard(self): #Function to move to Teacher Dashboard screen and handle wrong passwords
         global button_sound
         button_sound.play()
         global passcode
@@ -410,7 +411,7 @@ class Exercice(GridLayout):
     current_index = 0
     global right_answers
     right_answers = 0
-    def build(self):
+    def build(self): #Building exercices
         global button_sound
         button_sound.play()
         global mycol
@@ -460,16 +461,16 @@ class Exercice(GridLayout):
                         task_list.append(self.get_random_type_document(mycol))
                         actual_tasks = len(task_list)
             else:
-                if quiz_kind == "random":
+                if quiz_kind == "random": # Logic for random quiz
                     for i in range(1,11):
                         task_list.append(self.get_random_document(mycol))
                         actual_tasks = 10
-                if quiz_kind == "multiple_choice" or quiz_kind == "true_false" or quiz_kind == "free" or quiz_kind == "connecting" or quiz_kind == "ordering":
+                if quiz_kind == "multiple_choice" or quiz_kind == "true_false" or quiz_kind == "free" or quiz_kind == "connecting" or quiz_kind == "ordering": # Logic for quiz types
                     full_task_list = list(mycol.find({"exercice_type":quiz_kind}))
                     for i in range(1,len(full_task_list)+1):
                         task_list.append(self.get_random_type_document(mycol))
                         actual_tasks = len(task_list)
-                if quiz_kind == "grammar" or quiz_kind == "syntax" or quiz_kind == "vocabulary":
+                if quiz_kind == "grammar" or quiz_kind == "syntax" or quiz_kind == "vocabulary":# Logic for quiz tags
                     full_task_list = list(mycol.find({"exercice_tags":quiz_kind}))
                     for i in range(1,len(full_task_list)+1):
                         task_list.append(self.get_random_type_document(mycol))
@@ -551,10 +552,10 @@ class Exercice(GridLayout):
                 Next.disabled = False
                 Submit.disabled = False
     
-    def similarity(self,first,second):
+    def similarity(self,first,second): #Check the similarity ratio between two strings (used in free response)
         return SequenceMatcher(None, first, second).ratio()
     
-    def reveal_answer(self, instance):
+    def reveal_answer(self, instance): #Function for revealing answer after question has been submitted and determining whether user was correct
         global button_sound
         button_sound.play() 
         global Explanation
@@ -583,7 +584,7 @@ class Exercice(GridLayout):
             right_answers += 1 #incriment right response
         else: #else
             Explanation.text = "Not Quite. "+"\n"+exp_text #show explanation without incrimenting
-    def get_answer(self, instance):
+    def get_answer(self, instance): #Function to handle setting the current_answer variable by getting data from different UI
         global button_sound
         button_sound.play()
         global current_object
@@ -615,7 +616,7 @@ class Exercice(GridLayout):
         elif current_object["exercice_type"] == "free":
             Submit.disabled = False
             current_answer = instance.text
-    def next_task(self, instance):
+    def next_task(self, instance): #Function for iterating through the list and moving to the next exercice
         global button_sound
         button_sound.play()
         global mycol
@@ -635,7 +636,7 @@ class Exercice(GridLayout):
             self.build()
 
 
-class MainApp(App):
+class MainApp(App): #Class for the Main Application, used for connecting all the pages together and handling restarts
     def build(self):
         self.title = "Astaxulator"
         self.screen_manager = ScreenManager()
@@ -690,7 +691,7 @@ class MainApp(App):
         return (MainApp().run())
         
 
-if __name__ == "__main__":
+if __name__ == "__main__": #Run the application
     latinapp = MainApp()
     latinapp.run()
 
