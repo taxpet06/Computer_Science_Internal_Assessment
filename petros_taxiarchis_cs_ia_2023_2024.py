@@ -1,5 +1,7 @@
 import kivy
 import pymongo
+import os
+import sys
 from difflib import SequenceMatcher
 from kivy.core.audio import SoundLoader
 from kivy.clock import Clock
@@ -25,12 +27,16 @@ Window.size = (720*0.65, 1280*0.65)
 import random
 kivy.require('1.11.1')
 Window.clearcolor = 'FFD5A6' #Background
+bg_music = SoundLoader.load('Computer_Science_Internal_Assessment/2 Min Jazz Timer.mp3')
+if bg_music:
+    bg_music.play()
+
 global score
 global passcode 
 global once 
 global answer_field
 global button_sound
-button_sound = SoundLoader.load('Computer_Science_Internal_Assessment/bwuaaap.wav') #Button Soun
+button_sound = SoundLoader.load('Computer_Science_Internal_Assessment/bwuaaap.wav') #Button Sound
 once = 1
 passcode = "passcode" #Teacher Password
 score = 0
@@ -450,7 +456,7 @@ class Exercice(GridLayout):
                 #For a multiple choice quiz
                 if quiz_kind == "multiple_choice" or quiz_kind == "true_false" or quiz_kind == "free" or quiz_kind == "connecting" or quiz_kind == "ordering":
                     #Switch the full database entries list to one only containing the exercices tagged multiple_choice
-                    full_task_list = list(mycol.find({"exercice_type":quiz_kind})) 
+                    full_task_list = list(mycol.find({"exercice_type":quiz_kind})) #put all entries of certain quiz kind into list
                     #Add as many exercices in task list as there are total tasks in the database
                     for i in range(1,len(full_task_list)+1): 
                         task_list.append(self.get_random_type_document(mycol))
@@ -531,12 +537,15 @@ class Exercice(GridLayout):
                 Submit.disabled = False
         
         #Free Response & Ordering Words & Connecting Words
+        #if the current quiz that the user selected is of any of the types below
         elif current_object["exercice_type"] == "free" or current_object["exercice_type"] == "connecting" or current_object["exercice_type"] == "ordering":
             global answer_field
+            #Add all necessary widgets to interact with free response
             self.add_widget(Label(text = current_object["question_text"], color = '5D3B23', font_size = 20))
             Options = GridLayout(rows = current_object["options"], cols = 1, spacing=(10,10),padding=(10,10))
             self.add_widget(Options)
-            answer_field = TextInput(text = "", hint_text = "Place response here...", hint_text_color = 'FFFFFF', multiline = False, font_size = 20, color = 'FFFFFF', foreground_color = 'FFFFFF', background_color = 'B27B3E')
+            answer_field = TextInput(text = "", hint_text = "Place response here...", hint_text_color = 'FFFFFF', multiline = False, font_size = 20,
+                                      color = 'FFFFFF', foreground_color = 'FFFFFF', background_color = 'B27B3E')
             answer_field.bind(on_text_validate=self.get_answer)
             Options.add_widget(answer_field)
             Explanation = Label(text = "", color = '5D3B23', font_size = 20)
@@ -545,19 +554,23 @@ class Exercice(GridLayout):
             Buttons = GridLayout(cols = 2, spacing=(10,10),padding=(10,10))
             self.add_widget(Buttons)
             Submit = Button(text="Submit",font_size = 20, border= (2,2,2,2), halign="center", background_color='B27B3E', background_normal ='', on_press = self.reveal_answer, disabled = False)
+            #Upon pressing the Submit Button call the reveal answer function
             Next = Button(text="Next",font_size = 20, border= (2,2,2,2), halign="center", background_color='B27B3E', background_normal ='', disabled = True, on_press = self.next_task)
+            #Upon pressing the Next Button call the next task function
             Buttons.add_widget(Submit)
             Buttons.add_widget(Next)
+            #If there is an answer enable the Next and Submit buttons
             if current_answer != "":
                 Next.disabled = False
                 Submit.disabled = False
     
     def similarity(self,first,second): #Check the similarity ratio between two strings (used in free response)
-        return SequenceMatcher(None, first, second).ratio()
+        return SequenceMatcher(None, first, second).ratio() #Check similarity between first (user's response) and second (correct response)
     
     def reveal_answer(self, instance): #Function for revealing answer after question has been submitted and determining whether user was correct
+        #Get all necessary global variables
         global button_sound
-        button_sound.play() 
+        button_sound.play() #Play button sound 
         global Explanation
         global answer_field
         global exp_text
@@ -572,9 +585,9 @@ class Exercice(GridLayout):
         elif current_object["exercice_type"] == "free":
             current_answer = answer_field.text
             #make the slightly wrong current answer equal to the propper answer  
-            for i in current_object["correct_answer"]:
-                if self.similarity(current_answer,i) > 0.75:
-                    current_answer = current_object["correct_answer"][0]
+            for i in current_object["correct_answer"]: #Loop for every element in the correct answers
+                if self.similarity(current_answer,i) > 0.75: #If the user's answer has a similarity index of above 0.75 with any
+                    current_answer = current_object["correct_answer"][0] #Set the user's answer equal to an answer guaranteed to be correct
         Next.disabled = False
         for child in Options.children:
             child.disabled = True
@@ -584,7 +597,7 @@ class Exercice(GridLayout):
             right_answers += 1 #incriment right response
         else: #else
             Explanation.text = "Not Quite. "+"\n"+exp_text #show explanation without incrimenting
-    def get_answer(self, instance): #Function to handle setting the current_answer variable by getting data from different UI
+    def get_answer(self, instance): #Function to handle setxting the current_answer variable by getting data from different UI
         global button_sound
         button_sound.play()
         global current_object
@@ -629,12 +642,11 @@ class Exercice(GridLayout):
         global score
         current_index += 1
         if current_index == actual_tasks:
-            score = math.ceil((right_answers/actual_tasks)*100)
+            score = math.ceil((right_answers/actual_tasks)*100) #Calculate Percentage of right answers and round to nearest whole number
             latinapp.screen_manager.current = "Results"
         else:
             current_object = task_list[current_index]
             self.build()
-
 
 class MainApp(App): #Class for the Main Application, used for connecting all the pages together and handling restarts
     def build(self):
@@ -685,10 +697,9 @@ class MainApp(App): #Class for the Main Application, used for connecting all the
     def restart(self):
         self.root.clear_widgets()
         self.stop()
-        #self.build()
         Builder.unload_file("main.kv")
-        #self.build()
-        return (MainApp().run())
+        # os.execv(sys.executable, ['python'] + sys.argv)
+        return (MainApp().run()) 
         
 
 if __name__ == "__main__": #Run the application
