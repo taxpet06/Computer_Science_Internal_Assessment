@@ -7,7 +7,7 @@ import pymongo
 #grammar
 #vocabulary
 #syntax
-def adding(type,tags,question,option,all_options,correct,explanation_text):
+def adding(type,tags,question,option,all_options,correct,explanation_text): #this function is used for testing inputs to the database, it is later imported in the cs_ia_2023_2024.py file
     #Connect to the local MongoDB client
     myclient = pymongo.MongoClient("mongodb://localhost:27017/")
     mydb = myclient["IA"]
